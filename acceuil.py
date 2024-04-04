@@ -3,6 +3,7 @@ Implimentation de la page d'acceuil de l'application
 """
 import customtkinter as ctk
 import employe 
+import home_page
 
 #fonction pour switcher entre les options
 def switch(indicator_lb,page):
@@ -37,7 +38,7 @@ bar_menu.place(x=0, y=0)
 #onglet 1
 onglet1 = ctk.CTkButton(bar_menu,text = "Acceuil", font= ('Montsérrat', 15),width=150, height=25,
                         hover_color='#f00',fg_color='#000', corner_radius=0,
-                        command=lambda: switch(indicator_lb=onglet1_lb, page = page_d_aide))
+                        command=lambda: switch(indicator_lb=onglet1_lb, page =page_accueil))
 onglet1.place(x=0, y=2)
 onglet1_lb = ctk.CTkLabel(bar_menu, bg_color='#fff', width=150,height=2)
 onglet1_lb.place(x=0, y=28)
@@ -89,10 +90,21 @@ zone.place(x=5, y=35)
 
 
 #Definition des pages
+#Définition de la page d'acceuil
+def page_accueil():
+    home = ctk.CTkScrollableFrame(root, width=1160, height=640, fg_color="#000", bg_color="#000",
+                                  border_color="#fff",border_width=1)
+    home.place(x=10,y=35)
+    home_page.build_home(home)
+    
+page_accueil()
+
+#Définition de la page de gestion d'aide: utilisation de l'application
 def page_d_aide():
     for i in range(9):
         print(i)
 
+#Définition de la page de gestion des employés
 def page_employe():
     emp = ctk.CTkFrame(root, width=1190, height=660, fg_color="#000")
     employe.build_employe(emp)

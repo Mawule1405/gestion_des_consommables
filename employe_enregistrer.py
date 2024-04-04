@@ -10,7 +10,7 @@ import graphi_print as gp
 
 image_path = ""
 
-def modifier(frame):
+def enregistrement(frame):
     #choisir une photo
     def choisir_photo():
         """Procedure qui permet de choisir une photo"""
@@ -25,88 +25,17 @@ def modifier(frame):
                 image_pil = Image.open(image_path)
                 image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
                 label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
-                label_photo.place(x=75, y=120)
+                label_photo.place(x=75, y=20)
                 app.destroy()
         except:
             app.destroy()
             
-        
-
-    # fonction de recherche
-    def rechercher_employer():
-        """Procedure qui permet de rechercher un employe"""
-        option= option_de_recherche.get()
-        option_x = option.split(' ')[0]
-        id=0
-        try:
-            id = int(option_x)
-        except:
-            id=0
-        
-        employe = gp.get_one_employe(id_emp=id)
-
-        if employe != []:
-            #Nettoyage des chams
-            nom.delete(0,tk.END)
-            prenom.delete(0,tk.END)
-            nationalite.delete(0,tk.END)
-            residence.delete(0,tk.END)
-            salaire.delete(0,tk.END)
-            email.delete(0,tk.END)
-            telephone.delete(0,tk.END)
-            date_emb.delete(0,tk.END)
-            date_nais.delete(0,tk.END)
-            niveau.delete(0,tk.END)
-
-            #Insertion des inforamations
-            nom.insert(0,employe[0][1])
-            prenom.insert(0,employe[0][2])
-            date_nais.insert(0,employe[0][3])
-            date_emb.insert(0,employe[0][4])
-            nationalite.insert(0,employe[0][5])
-            niveau.insert(0,employe[0][6])
-            salaire.insert(0,int(employe[0][7]))
-            residence.insert(0,employe[0][8])
-            email.insert(0,employe[0][9])
-            telephone.insert(0,employe[0][10])
-            sexe.set(employe[0][13])
-            service.set(str(employe[0][12])+' '+employe[0][14])
-
-                
-
-            try:
-                image_path = employe[0][11]
-                photo_emp.delete(0,tk.END)
-                photo_emp.insert(0,image_path)
-                image_pil = Image.open(image_path)
-                image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
-                label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
-                label_photo.place(x=75, y=120)
-            except:
-                label_photo = ctk.CTkLabel(master=frame,text="", width=200, height=270, fg_color='#fff',
-                                   corner_radius=10)
-                label_photo.place(x=75, y=120)
-        else:
-            #Nettoyage des chams
-            nom.delete(0,tk.END)
-            prenom.delete(0,tk.END)
-            nationalite.delete(0,tk.END)
-            residence.delete(0,tk.END)
-            salaire.delete(0,tk.END)
-            email.delete(0,tk.END)
-            telephone.delete(0,tk.END)
-            date_emb.delete(0,tk.END)
-            date_nais.delete(0,tk.END)
-            niveau.delete(0,tk.END)
-            photo_emp.delete(0,tk.END)
-            
-      #  
 
     
     #Soumettre une modification
-    def modification():
+    def enregistrer():
         """Une procedure qui sert a modifier les attributs d'un employe"""
-        id_e = option_de_recherche.get().split()[0] ; id_is_val = False
+        
         nom_e = nom.get()                           ; nom_is_val = False
         prenom_e = prenom.get()                     ; prenom_is_val = False
         date_nais_e = date_nais.get()               ; date_nais_is_val = False
@@ -126,14 +55,6 @@ def modifier(frame):
         
         tousValides = False
         
-        #Verification de l'identifiant
-        try: 
-            id_e = int(id_e)
-            id_is_val=True
-            option_de_recherche.configure(border_color = '#fff')
-        except:
-            id_is_val=False
-            option_de_recherche.configure(border_color = 'red')
         
         #verification du nom
         if nom_e !='':
@@ -242,24 +163,24 @@ def modifier(frame):
             service.configure(border_color = 'red')
 
         
-        tousValides = all([id_is_val, nom_is_val, prenom_is_val, date_nais_is_val, date_emb_is_val, 
+        tousValides = all([nom_is_val, prenom_is_val, date_nais_is_val, date_emb_is_val, 
                            nationalite_is_val, niveau_is_val, salaire_is_val, residence_is_val, 
                            email_is_val, telephone_is_val, sexe_is_val, service_is_val])
 
         if tousValides:
-            liste_attributs = (
+            tuples_attributs = (
                  nom_e, prenom_e, date_nais_e, date_emb_e,
                 nationalite_e, niveau_e, salaire_e, residence_e,
-                email_e, telephone_e,photo_e,  service_e, sexe_e,id_e
+                email_e, telephone_e,photo_e,  service_e, sexe_e
             )
             
-            resultat = gp.modifier_employe(information=liste_attributs)
+            resultat = gp.inserer_employe(information=tuples_attributs)
 
             if resultat:
-                messagebox.showwarning("Résultat de la soumission","La modification a été effectué avec succès")
+                messagebox.showwarning("Résultat de la soumission","Enregistrement effectué avec succès")
 
             else:
-                messagebox.showwarning("Résultat de la soumission","La modification a échoué")
+                messagebox.showwarning("Résultat de la soumission","L'enregistrement a échoué")
         else:
             messagebox.showwarning("Valeurs invalides","Veuillez vérifier les champs.\nUn champs de bordure rouge signifie que la valeur est invalide.")
 
@@ -273,22 +194,8 @@ def modifier(frame):
     except :
         messagebox.showwarning('Connexion échoué', """La tentative de connexion à la base de données a échoué.\nVeuillez vérifier le serveur de la base de données ou réessayer plutard!""")
     
-    
-    
-    option_de_recherche = ctk.CTkComboBox(master=frame, width=200, height=30, fg_color="#000", border_width=1, 
-                            border_color='#fff', values=options, button_color='#fff',button_hover_color='#000',
-                            font=('Montsérrat', 12,),dropdown_font=('Montsérrat',15),
-                            dropdown_fg_color= "#000", dropdown_hover_color="#f00", corner_radius=20,
-                            )
-   
-    option_de_recherche.place(x=75, y=20)
 
-    #Bouton recherche
-    rechercher = ctk.CTkButton(frame, text="Rechercher", width=200, height=30, fg_color='dark green',
-                                  hover_color='blue', command= rechercher_employer,
-                                  font=("Montsérrat", 20), corner_radius=20, )
-    rechercher.place(x=75, y=60)
-
+    
     #photo
     photo_emp = ctk.CTkEntry(frame,width=5,text_color="#000", bg_color="#000",fg_color="#000")
     if image_path != "" and image_path !=None:
@@ -296,19 +203,19 @@ def modifier(frame):
         image_pil = Image.open(image_path)
         image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
         label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
-        label_photo.place(x=75, y=120)
+        label_photo.place(x=75, y=20)
     else:
         photo_emp.insert(0,image_path)
 
         label_photo = ctk.CTkLabel(master=frame,text=image_path, width=200, height=270, fg_color='#fff',
                                    corner_radius=10)
-        label_photo.place(x=75, y=120)
+        label_photo.place(x=75, y=20)
 
     #Bouton pour changer l'image
     changer_photo = ctk.CTkButton(frame, text="Choisir une image", width=200, height=35, fg_color='dark green',
                                   hover_color='blue', command= lambda: choisir_photo(),
                                   font=("Montsérrat", 20))
-    changer_photo.place(x=75, y=405)    
+    changer_photo.place(x=75, y=305)    
 
     #nom
     nom_lb =ctk.CTkLabel(frame, text="Nom",height=20, font = ('Montsérrat', 18), fg_color = '#000',
@@ -426,7 +333,7 @@ def modifier(frame):
 
     #bouton de soumission
     soumettre = ctk.CTkButton(frame, text="Soumettre",width=200, height=40, fg_color = 'dark green',
-                              hover_color='blue', font=('Montsérrat', 20), command= lambda : modification())
+                              hover_color='blue', font=('Montsérrat', 20), command= lambda : enregistrer())
     soumettre.place(x=75 , y=470)
 
 

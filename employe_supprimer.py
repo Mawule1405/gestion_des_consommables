@@ -10,26 +10,7 @@ import graphi_print as gp
 
 image_path = ""
 
-def modifier(frame):
-    #choisir une photo
-    def choisir_photo():
-        """Procedure qui permet de choisir une photo"""
-        app = ctk.CTk()
-        app.withdraw()
-        types_de_photos=[("Images JPG","*.jpg"),("Images JPEG","*.jpeg"),("Images PNG","*.png"),]
-        chemin_de_photos = ctk.filedialog.askopenfilename(title="Choisissez une photo", filetypes=types_de_photos)
-        try:
-                image_path = chemin_de_photos
-                photo_emp.delete(0,tk.END)
-                photo_emp.insert(0,image_path)
-                image_pil = Image.open(image_path)
-                image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
-                label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
-                label_photo.place(x=75, y=120)
-                app.destroy()
-        except:
-            app.destroy()
-            
+def supprimer(frame):
         
 
     # fonction de recherche
@@ -104,27 +85,9 @@ def modifier(frame):
 
     
     #Soumettre une modification
-    def modification():
+    def suppression():
         """Une procedure qui sert a modifier les attributs d'un employe"""
         id_e = option_de_recherche.get().split()[0] ; id_is_val = False
-        nom_e = nom.get()                           ; nom_is_val = False
-        prenom_e = prenom.get()                     ; prenom_is_val = False
-        date_nais_e = date_nais.get()               ; date_nais_is_val = False
-        date_emb_e = date_emb.get()                 ; date_emb_is_val = False
-        nationalite_e = nationalite.get()           ; nationalite_is_val = False
-        niveau_e = niveau.get()                     ; niveau_is_val = False
-        salaire_e = salaire.get()                   ; salaire_is_val = False
-        residence_e = residence.get()               ; residence_is_val = False
-        email_e = email.get()                       ; email_is_val= False
-        telephone_e = telephone.get()               ; telephone_is_val = False
-        sexe_e = sexe.get()                         ; sexe_is_val = False
-        service_e = service.get().split()[0]        ; service_is_val = False
-        photo_e = photo_emp.get()   
-        photo_e= photo_e.replace('/','\\')
-        photo_emp.delete(0, tk.END)
-        photo_emp.insert(0,"RECUPERE VAL")                
-        
-        tousValides = False
         
         #Verification de l'identifiant
         try: 
@@ -135,133 +98,20 @@ def modifier(frame):
             id_is_val=False
             option_de_recherche.configure(border_color = 'red')
         
-        #verification du nom
-        if nom_e !='':
-            nom_is_val= True
-            nom.configure(border_color = '#fff')
-        else:
-            nom_is_val= False
-            nom.configure(border_color = 'red')
-
-        #verification du prenom
-        if prenom_e !='':
-            prenom_is_val= True
-            prenom.configure(border_color = '#fff')
-        else:
-            prenom_is_val= False
-            prenom.configure(border_color = 'red')
-
-        #verification de la date de naissance
-        try:
-            date_nais_is_val= True
-            date_nais_e = datetime.strptime(date_nais_e, '%Y-%m-%d').date()
-            date_nais.configure(border_color = '#fff')
-        except:
-            date_nais_is_val= False
-            date_nais.configure(border_color = 'red')
         
-        #verification de la date d'embauche
-        try:
-            date_emb_is_val = True
-            date_emb_e = datetime.strptime(date_emb_e, '%Y-%m-%d').date()
-            date_emb.configure(border_color = '#fff')
-        except:
-            date_emb_is_val = False
-            date_emb.configure(border_color = 'red')
         
-        #Verification de la nationalite
-        if nationalite_e !='':
-            nationalite_is_val= True
-            nationalite.configure(border_color = '#fff')
-        else:
-            nationalite_is_val= False
-            nationalite.configure(border_color = 'red')
 
-        #Verification de la niveau
-        if niveau_e !='':
-            niveau_is_val= True
-            niveau.configure(border_color = '#fff')
-        else:
-            niveau_is_val= False
-            niveau.configure(border_color = 'red')
-
-        #Verification de la residence
-        if residence_e !='':
-            residence_is_val= True
-            residence.configure(border_color = '#fff')
-        else:
-            residence_is_val= False
-            residence.configure(border_color = 'red')
-
-        #Verification de la email
-        regex = r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
-        if re.search(regex, email_e):
-            email_is_val= True
-            email.configure(border_color = '#fff')
-        else:
-            email_is_val= False
-            email.configure(border_color = 'red')
-
-        #Verification de la telephone
-        regrex1 = r"^(?:\+|00)[0-9]{11,}"
-
-        if re.search(regrex1, telephone_e):
-            telephone_is_val= True
-            telephone.configure(border_color = '#fff')
-        else:
-            telephone_is_val= False
-            telephone.configure(border_color = 'red')
-
-
-        #Verification de la telephone
-        regrex2 = r"^[1-9][0-9]{5,10}$"
-
-        if re.search(regrex2, salaire_e):
-            salaire_e = int(salaire_e)
-            salaire_is_val= True
-            salaire.configure(border_color = '#fff')
-        else:
-            salaire_is_val= False
-            salaire.configure(border_color = 'red')
-
-        #Verification de la sexe
-        if sexe_e !='':
-            sexe_is_val= True
-            sexe.configure(border_color = '#fff')
-        else:
-            sexe_is_val= False
-            sexe.configure(border_color = 'red')
-
-        #Verification de la service
-        try:
-            service_is_val= True
-            service_e = int(service_e)
-            service.configure(border_color = '#fff')
-        except:
-            service_is_val= False
-            service.configure(border_color = 'red')
-
-        
-        tousValides = all([id_is_val, nom_is_val, prenom_is_val, date_nais_is_val, date_emb_is_val, 
-                           nationalite_is_val, niveau_is_val, salaire_is_val, residence_is_val, 
-                           email_is_val, telephone_is_val, sexe_is_val, service_is_val])
-
-        if tousValides:
-            liste_attributs = (
-                 nom_e, prenom_e, date_nais_e, date_emb_e,
-                nationalite_e, niveau_e, salaire_e, residence_e,
-                email_e, telephone_e,photo_e,  service_e, sexe_e,id_e
-            )
+        if id_is_val:
             
-            resultat = gp.modifier_employe(information=liste_attributs)
+            resultat = messagebox.askquestion("Suppression d'un employe","Confirmez-vous la suppression de l'employe?")
+            
 
             if resultat:
-                messagebox.showwarning("Résultat de la soumission","La modification a été effectué avec succès")
-
-            else:
-                messagebox.showwarning("Résultat de la soumission","La modification a échoué")
-        else:
-            messagebox.showwarning("Valeurs invalides","Veuillez vérifier les champs.\nUn champs de bordure rouge signifie que la valeur est invalide.")
+                answer = gp.delete_employe(id_e)
+                if answer :
+                    messagebox.showwarning("Suppression","Employé(e) supprimé(e)")
+                else:
+                    messagebox.showwarning("Suppression",".\nImpossible de supprimer l'employé.")
 
 
     # Créer une boîte de sélection
@@ -304,11 +154,7 @@ def modifier(frame):
                                    corner_radius=10)
         label_photo.place(x=75, y=120)
 
-    #Bouton pour changer l'image
-    changer_photo = ctk.CTkButton(frame, text="Choisir une image", width=200, height=35, fg_color='dark green',
-                                  hover_color='blue', command= lambda: choisir_photo(),
-                                  font=("Montsérrat", 20))
-    changer_photo.place(x=75, y=405)    
+        
 
     #nom
     nom_lb =ctk.CTkLabel(frame, text="Nom",height=20, font = ('Montsérrat', 18), fg_color = '#000',
@@ -425,8 +271,8 @@ def modifier(frame):
 
 
     #bouton de soumission
-    soumettre = ctk.CTkButton(frame, text="Soumettre",width=200, height=40, fg_color = 'dark green',
-                              hover_color='blue', font=('Montsérrat', 20), command= lambda : modification())
+    soumettre = ctk.CTkButton(frame, text="Supprimer",width=200, height=40, fg_color = 'dark green',
+                              hover_color='blue', font=('Montsérrat', 20), command= lambda : suppression())
     soumettre.place(x=75 , y=470)
 
 
