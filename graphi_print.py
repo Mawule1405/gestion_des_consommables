@@ -53,8 +53,9 @@ def get_one_categories(id_cat = 0,host_x='localhost', user_x='root', password_x=
     bdd.close()
     return liste
 
+
 def get_services(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    sql=f"SELECT * FROM Service"
+    sql="SELECT s.id_serv, nom_serv, description_serv, date_serv, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp"
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -62,7 +63,14 @@ def get_services(host_x='localhost', user_x='root', password_x='', database_name
     
     return liste
 
-
+def get_one_service(id,host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql=f"SELECT s.id_serv, nom_serv, description_serv, date_serv, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp AND s.id_serv = {id}"
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur= bdd.cursor()
+    curseur.execute(sql)
+    liste= curseur.fetchall()
+    
+    return liste
 
 
 def get_categories(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
@@ -105,8 +113,8 @@ def inserer_categorie(information, host_x='localhost', user_x='root', password_x
 def modifier_categories(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """Fonction pour modifier le nom d'une catégories"""
     
-    sql = """UPDATE Categories
-             SET nom_cat = %s,
+    sql = """UPDATE Categorie
+             SET nom_cat = %s
              WHERE id_cat = %s"""
     bdd = None
     curseur = None
@@ -126,6 +134,53 @@ def modifier_categories(information, host_x='localhost', user_x='root', password
             bdd.close()
 
 
+def supprimer_categories(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """Fonction pour supprimer un nom de catégories"""
+    
+    sql1 = f"""
+             SELECT id_cat FROM Consommable"""
+    
+    sql2 = f"""DELETE FROM Categorie
+             WHERE id_cat = {id} """
+    
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql1)
+
+        reponse = curseur.fetchall()
+
+        if id in [ i[0] for i in reponse]:
+            return False
+        else:
+            curseur.execute(sql2)
+            bdd.commit()
+            return True
+        
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+
+"""
+-----TOUS POUR LES CONSOMMABLES
+"""
+def get_consommables(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """Fonction de récupération des catégories"""
+    sql="SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, nom_cat FROM Consommable co, Categorie ca WHERE co.id_cat = ca.id_cat  ORDER BY id_cons"
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur= bdd.cursor()
+    curseur.execute(sql)
+    liste= curseur.fetchall()
+    curseur.close()
+    bdd.close()
+    return liste
 
 
 def modifier_employe(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
@@ -198,7 +253,7 @@ def inserer_employe(information, host_x='localhost', user_x='root', password_x='
             bdd.close()
 
 def delete_employe(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    sql = f"""DELETE FROM Employe WHERE id_emp = {id}"""
+    sql = f"""DELETE FROM Employe WHERE id_emp = {id} """
     bdd = None
     curseur = None
     try:

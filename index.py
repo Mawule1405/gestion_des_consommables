@@ -57,7 +57,7 @@ fen.resizable(width = False, height = False)
 zone_de_con = ctk.CTkFrame(fen, width = 300, height =400, border_color="#fff",)
 
 #Définition de l'image de fond
-image_pil = Image.open("projet_python/images/images_app/bg_page_connexion.png")
+image_pil = Image.open("./gestion_des_consommables-main/images/images_app/bg_page_connexion.png")
 image_tk = ImageTk.PhotoImage(image_pil)
 label_image = tkinter.Label(fen, image=image_tk,width=500,height=900)
 label_image.place(x=0, y=0)
