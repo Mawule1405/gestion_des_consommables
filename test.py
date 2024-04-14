@@ -1,44 +1,39 @@
 import tkinter as tk
 from tkinter import ttk
+from openpyxl import Workbook
 
-# Données de la liste
-donnees = [
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("2", "Encres prêtes à l'emploi (RFU)", "15", "3", "2"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    ("1", "Encres acryliques à haut extrait sec (HSA)", "10", "2", "1"),
-    # Ajoutez d'autres tuples de données ici
-]
+class ExcelSheet:
+    def _init_(self, root):
+        self.root = root
+        self.root.title("Feuille de calcul Excel")
 
-# Créer la fenêtre principale
-root = tk.Tk()
-root.title("Affichage des données")
-style = ttk.Style()
+        self.workbook = Workbook()
+        self.sheet = self.workbook.active
 
-style.configure("Treeview.Heading", font=('Helvetica', 20, 'bold'), rowheight=25)
+        self.tree = ttk.Treeview(self.root)
+        self.tree["columns"] = ("A", "B", "C")
 
-# Créer le Treeview
-tree = ttk.Treeview(root, columns=('ID', 'Description', 'Prix', 'Quantité', 'Commandes'), show='headings')
-style.configure("Treeview", font=('Helvetica', 12, 'bold'), rowheight=25)
-# Définir les en-têtes
-tree.heading('ID', text='ID')
-tree.heading('Description', text='Description')
-tree.heading('Prix', text='Prix')
-tree.heading('Quantité', text='Quantité')
-tree.heading('Commandes', text='Commandes')
+        self.tree.heading("#0", text="Row/Column")
+        self.tree.heading("A", text="A")
+        self.tree.heading("B", text="B")
+        self.tree.heading("C", text="C")
 
-# Ajouter les données dans le Treeview
-for donnee in donnees:
-    tree.insert('', tk.END, values=donnee)
+        self.tree.pack(expand=True, fill="both")
 
-# Pack le Treeview dans la fenêtre principale
-tree.pack(expand=True, fill='both')
+        self.add_button = tk.Button(self.root, text="Ajouter ligne", command=self.add_row)
+        self.add_button.pack()
 
-# Exécuter la boucle principale
-root.mainloop()
+    def add_row(self):
+        row_number = len(self.sheet["A"]) + 1
+        self.sheet.append([f"A{row_number}", f"B{row_number}", f"C{row_number}"])
+        self.update_treeview()
+
+    def update_treeview(self):
+        self.tree.delete(*self.tree.get_children())
+        for row in self.sheet.iter_rows(values_only=True):
+            self.tree.insert("", "end", text=row[0], values=row[1:])
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    excel_sheet = ExcelSheet(root)
+    root.mainloop()

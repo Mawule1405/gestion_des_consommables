@@ -72,6 +72,89 @@ def get_one_service(id,host_x='localhost', user_x='root', password_x='', databas
     
     return liste
 
+def inserer_service(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = """INSERT INTO Service
+                 (id_serv,
+                 nom_serv,
+                 description_serv,
+                 date_serv,
+                 id_emp_resp
+             )
+             
+             VALUES (%s, %s,%s,%s,%s)"""
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+
+
+
+def update_service(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = """UPDATE Service
+             SET 
+                 nom_serv =  %s,
+                 description_serv = %s,
+                 date_serv = %s,
+                 id_emp_resp = %s
+            WHERE id_serv = %s
+             """
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+
+
+
+def supprimer_service(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """Fonction pour supprimer un service"""
+    
+    
+    sql = f"""DELETE FROM Service
+             WHERE id_serv = {id} """
+    
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql)
+        bdd.commit()
+        return True
+    
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+#=====================CATEGORIES======================================================
+#=====================================================================================
 
 def get_categories(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """Fonction de récupération des catégories"""
@@ -182,6 +265,16 @@ def get_consommables(host_x='localhost', user_x='root', password_x='', database_
     bdd.close()
     return liste
 
+def get_consommables_by_cat(id_cat,host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """Fonction de récupération des catégories"""
+    sql=f"SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons FROM Consommable co WHERE co.id_cat = {id_cat}  ORDER BY id_cons"
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur= bdd.cursor()
+    curseur.execute(sql)
+    liste= curseur.fetchall()
+    curseur.close()
+    bdd.close()
+    return liste
 
 def modifier_employe(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     sql = """UPDATE Employe

@@ -16,13 +16,13 @@ def consommables(framescrol):
 
     """Formulaire"""
     #Le formulaire
-    formulaire = ctk.CTkFrame(conso, width=980, height=200, bg_color=set.col_bg,fg_color=set.col_fg,border_color=set.col_border,
+    formulaire = ctk.CTkFrame(conso, width=960, height=210, bg_color=set.col_bg,fg_color=set.col_fg,border_color=set.col_border,
                          border_width=1)
-    formulaire.place(x=5, y=15)
+    formulaire.place(x=20, y=15)
 
     liste_conso = ctk.CTkLabel(conso, text= "FORMULAIRE", fg_color =set.col_fg,font = ('Montsérrat', 20),
                              text_color =set.col_text)
-    liste_conso.place(x=10, y=5 )
+    liste_conso.place(x=25, y=5 )
 
     
 
@@ -104,12 +104,12 @@ def consommables(framescrol):
 
     liste_cons = ctk.CTkLabel(framescrol, text= "Liste de des consommables".upper(), fg_color=set.col_fg,
                              font = ('Montsérrat', 20), text_color= set.col_text , bg_color=set.col_bg)
-    liste_cons.place(x=5, y=230)
+    liste_cons.place(x=15, y=250)
 
-    frame_cons = ctk.CTkScrollableFrame(framescrol, width=960, height=350, border_color=set.col_border, border_width=1,
+    frame_cons = ctk.CTkScrollableFrame(framescrol, width=940, height=320, border_color=set.col_border, border_width=1,
                                              fg_color=set.col_fg, bg_color= set.col_bg, orientation='vertical',
                                              scrollbar_fg_color=set.col_fg)
-    frame_cons.place(x=5 , y=270)
+    frame_cons.place(x=15 , y=290)
 
     style_cons = ttk.Style()
     style_cons.configure("Treeview.Heading", font=('Helvetica', 15, 'bold'), rowheight=20, foreground=set.col_fg)
@@ -118,8 +118,11 @@ def consommables(framescrol):
                              show='headings', height=20)
 
     # Définir les en-têtes
-    tree_cons.column('nom_cons', width=300)
-    tree_cons.column('id_cons', width=100) 
+    tree_cons.column('nom_cons', width=400)
+    tree_cons.column('id_cons', width=75) 
+    tree_cons.column("qtestock_cons", width=100)
+    tree_cons.column("qteseuil_cons", width=100)
+    tree_cons.column("prix_unitaire_cons", width=300)
     tree_cons.heading('id_cons', text='ID')
     tree_cons.heading('nom_cons', text='Nom ')
     tree_cons.heading('qtestock_cons', text='Q S')

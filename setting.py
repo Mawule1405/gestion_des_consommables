@@ -1,4 +1,6 @@
-
+col_white = "#000062"
+col_green = "#007703"
+col_rouge ="#f00"
 col_bg1 = "#1A237E"
 col_fg1 = "#1A237E"
 col_text= "#fff"
@@ -8,4 +10,5 @@ col_border = "#fff"
 col_bg = "#00008b"
 col_fg = "#00008b"
 col_placeholder = '#2f5'
-col_tx = '#ff0'
+col_tx = '#fff'
+col_fg_aff = "#f00"
