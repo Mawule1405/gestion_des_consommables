@@ -26,13 +26,13 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `appartenir`
 --
-
 DROP TABLE IF EXISTS `appartenir`;
 CREATE TABLE IF NOT EXISTS `appartenir` (
+  `id_app` int NOT NULL AUTO_INCREMENT,
   `id_com` int NOT NULL,
   `id_cons` int NOT NULL,
   `qte_com` int DEFAULT NULL,
-  PRIMARY KEY (`id_com`,`id_cons`),
+  PRIMARY KEY (`id_app`),
   KEY `appartient_consommable_fk` (`id_cons`)
 ) ;
 
@@ -211,17 +211,16 @@ INSERT INTO `consommable` (`id_cons`, `nom_cons`, `qtestock_cons`, `qteseuil_con
 --
 -- Structure de la table `demander`
 --
-
 DROP TABLE IF EXISTS `demander`;
 CREATE TABLE IF NOT EXISTS `demander` (
+  `id_dem` int NOT NULL AUTO_INCREMENT,
   `id_emp` int NOT NULL,
   `id_cons` int NOT NULL,
   `qte_demande` int DEFAULT NULL,
   `date_demande` date DEFAULT NULL,
-  PRIMARY KEY (`id_emp`,`id_cons`),
+  PRIMARY KEY (`id_dem`),
   KEY `demande_consommable_fk` (`id_cons`)
 ) ;
-
 --
 -- Déchargement des données de la table `demander`
 --

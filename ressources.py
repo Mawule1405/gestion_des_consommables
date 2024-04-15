@@ -5,6 +5,7 @@ import consommables as cons
 import services as serv
 import setting as set
 import attribution as attr
+import approvisionnement as app
 
 def build_home(framescrol):
     
@@ -48,7 +49,7 @@ def build_home(framescrol):
     distribuer.place(x=2,y=84)
 
     approvisionner = ctk.CTkButton(slide_frame,text="Approvisionnement".upper(), width=196, height=40, fg_color=set.col_fg,corner_radius=0, hover_color=set.col_hover,
-                           font= ('Montsérrat',11),  command= lambda : switch([consommable, distribuer, categorie],aff_frame, page_vide))
+                           font= ('Montsérrat',11),  command= lambda : switch([consommable, distribuer, categorie],aff_frame, page_approvisionnement))
     approvisionner.place(x=2,y=126),
 
 
@@ -61,6 +62,9 @@ def build_home(framescrol):
 
     def page_attribution():
         attr.attribuer(aff_frame)
+
+    def page_approvisionnement():
+        app.approvisionner(aff_frame)
         
     def page_vide():
         attr.attribuer(aff_frame)

@@ -363,3 +363,53 @@ def delete_employe(id, host_x='localhost', user_x='root', password_x='', databas
             curseur.close()
         if bdd:
             bdd.close()
+
+#==================================================================================
+#================= GESTION DE LA TABLES DEMANDER ==================================
+
+def inserer_demande(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = """INSERT INTO Demander
+                 (id_emp,
+                 id_cons,
+                 qte_demande,
+                 date_demande
+             )
+             
+             VALUES (%s, %s, %s, %s)"""
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.executemany(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+
+
+
+#=======================================================================================
+#=========================GESTION DES PPROVISIONNEMENT==================================
+def get_last_commande_id( host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """
+        Cette fonction permet récuper id de la dernière commande
+    """
+    sql=f"SELECT  id_com FROM Commande ORDER BY id_com  DESC LIMIT 1"
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur= bdd.cursor()
+    curseur.execute(sql)
+    liste= curseur.fetchall()
+    curseur.close()
+    bdd.close()
+
+    if liste:
+        return liste[0][0]
+    else:
+        return 0
