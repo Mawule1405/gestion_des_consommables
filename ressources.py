@@ -31,7 +31,7 @@ def build_home(framescrol):
 
     #zone d'affichage
     aff_frame = ctk.CTkFrame(framescrol, width=993, height= 645, border_color= set.col_border, border_width=1,
-                                fg_color="#f00", corner_radius=0)
+                                fg_color=set.col_blanc_4, corner_radius=0)
     aff_frame.place(x=200, y=0)
 
     #Les boutons
@@ -50,7 +50,7 @@ def build_home(framescrol):
 
     approvisionner = ctk.CTkButton(slide_frame,text="Approvisionnement".upper(), width=196, height=40, fg_color=set.col_fg,corner_radius=0, hover_color=set.col_hover,
                            font= ('Montsérrat',11),  command= lambda : switch([consommable, distribuer, categorie],aff_frame, page_approvisionnement))
-    approvisionner.place(x=2,y=126),
+    approvisionner.place(x=2,y=126)
 
 
     #Les fonctions

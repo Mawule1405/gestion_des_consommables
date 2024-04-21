@@ -221,97 +221,99 @@ def services(framescrol):
 
     #Définition des Services
     #zone
-    service = ctk.CTkFrame(framescrol, width=1200, height=640, fg_color=set.col_fg, bg_color=set.col_bg,
+    service = ctk.CTkFrame(framescrol, width=1200, height=640, fg_color=set.col_blanc_4, bg_color=set.col_bg,
                          border_color=set.col_border, border_width=0)
     service.pack(pady = 0, padx=0)
 
 
      #Le formulaire
-    formulaire = ctk.CTkFrame(service, width=830, height=300, bg_color=set.col_bg,fg_color=set.col_fg ,border_color=set.col_border,
-                         border_width=1)
-    formulaire.place(x=75, y=25)
+    formulaire = ctk.CTkFrame(service, width=320, height=500,fg_color=set.col_blanc_4 ,border_color=set.col_noir_1,
+                         border_width=2)
+    formulaire.place(x=650, y=25)
 
-    liste_conso = ctk.CTkLabel(service, text= "FORMULAIRE", fg_color =set.col_fg,font = ('Montsérrat', 15),
-                             text_color =set.col_text)
-    liste_conso.place(x=85, y=10 )
+    liste_conso = ctk.CTkLabel(service, text= "FORMULAIRE", fg_color =set.col_blanc_4,font = ('Montsérrat', 15),
+                             text_color =set.col_noir_1)
+    liste_conso.place(x=660, y=10 )
 
     
 
-    #Identifier Verificqtion de l'ID
-    id = ctk.CTkLabel(formulaire, text='Identifiant :', font= ("Montsérrat",18), text_color=set.col_tx, bg_color=set.col_bg, fg_color= set.col_fg)
-    id.place(x=5, y=35)
-    id_e = ctk.CTkEntry(formulaire, placeholder_text="0",text_color=set.col_text, bg_color=set.col_bg, fg_color= set.col_fg,
-                        placeholder_text_color=set.col_placeholder, justify = 'right', width=100, height=30, corner_radius=0,
-                        font= ("Montsérrat",16))
-    id_e.place(x=150, y= 35)
+    #Identifier Verification de l'ID
+    id = ctk.CTkLabel(formulaire, text='ID :', font= ("Montsérrat",15), text_color=set.col_noir_1, fg_color= set.col_blanc_4)
+    id.place(x=5, y=25)
+    id_e = ctk.CTkEntry(formulaire, placeholder_text="0",text_color=set.col_noir_1, fg_color= set.col_blanc_4, 
+                        placeholder_text_color=set.col_placeholder, justify = 'right', width=240, height=30, corner_radius=5,
+                        font= ("Montsérrat",13))
+    id_e.place(x=75, y= 25)
     
     #Nom du produit
-    nom = ctk.CTkLabel(formulaire, text='Nom :', font= ("Montsérrat",18), text_color=set.col_tx, bg_color=set.col_bg, fg_color= set.col_fg)
-    nom.place(x=410, y=35)
-    nom_e = ctk.CTkEntry(formulaire, placeholder_text="Nom du service",text_color=set.col_text, bg_color=set.col_bg, fg_color= set.col_fg,
-                        placeholder_text_color=set.col_placeholder, justify = 'right', width=300, height=30, corner_radius=0,
-                        font= ("Montsérrat",16))
-    nom_e.place(x=520, y= 35)
+    nom = ctk.CTkLabel(formulaire, text='Nom :', font= ("Montsérrat",15), text_color=set.col_noir_1, fg_color= set.col_blanc_4)
+    nom.place(x=5, y=70)
+    nom_e = ctk.CTkEntry(formulaire, placeholder_text="Nom du service",text_color=set.col_noir_1,fg_color= set.col_blanc_4,
+                        placeholder_text_color=set.col_placeholder, justify = 'right', width=240, height=30, corner_radius=5,
+                        font= ("Montsérrat",13))
+    
+    nom_e.place(x=75, y= 70)
 
     #Prix unitaire
-    description = ctk.CTkLabel(formulaire, text='Description :', font= ("Montsérrat",18), text_color=set.col_tx, bg_color=set.col_bg, fg_color= set.col_fg)
-    description.place(x=5, y=150)
-    description_e = ctk.CTkTextbox(formulaire,text_color=set.col_text, bg_color=set.col_bg, fg_color= set.col_fg,
-                         width=670, height=70, corner_radius=0, border_width=1, border_color=set.col_border, 
-                        font= ("Montsérrat",16))
-    description_e.place(x=150, y= 150)
+    description = ctk.CTkLabel(formulaire, text='Description:', font= ("Montsérrat",15), text_color=set.col_noir_1, 
+                               fg_color= set.col_blanc_4)
+    description.place(x=5, y=110)
+
+    description_e = ctk.CTkTextbox(formulaire,text_color=set.col_noir_1, fg_color= set.col_blanc_4,
+                         width=310, height=100, corner_radius=5, border_width=1, font= ("Montsérrat",16))
+    description_e.place(x=5, y= 140)
    
     #Date de création du service
-    date_creation = ctk.CTkLabel(formulaire, text='Date de créaion :', font= ("Montsérrat",18), text_color=set.col_tx, bg_color=set.col_bg, fg_color= set.col_fg)
-    date_creation.place(x=5, y=90)
-    date_creation_e = ctk.CTkEntry(formulaire, placeholder_text="AAAA-MM-JJ",text_color=set.col_text, bg_color=set.col_bg, fg_color= set.col_fg,
-                        placeholder_text_color=set.col_placeholder, justify = 'left', width=200, height=30, corner_radius=0,
-                        font= ("Montsérrat",16))
-    date_creation_e.place(x=150, y= 90)
+    date_creation = ctk.CTkLabel(formulaire, text='Date de créaion :', font= ("Montsérrat",14), text_color=set.col_noir_1,
+                                  fg_color= set.col_blanc_4)
+    date_creation.place(x=5, y=270)
+    date_creation_e = ctk.CTkEntry(formulaire, placeholder_text="AAAA-MM-JJ",text_color=set.col_noir_1, 
+                                    fg_color= set.col_blanc_4, placeholder_text_color=set.col_placeholder, 
+                                    justify = 'left', width=190, height=30, corner_radius=5,
+                        font= ("Montsérrat",14))
+    date_creation_e.place(x=125, y= 270)
 
     #Quantité seuil du produit a respecter
     option = gp.get_employes()
     options = ["Choisir un service"]+[str(i[0])+' '+i[1]+' '+i[2] for i in option]
-    responsable = ctk.CTkLabel(formulaire, text='Responsable :', font= ("Montsérrat",18), text_color=set.col_tx, bg_color=set.col_bg, fg_color= set.col_fg)
-    responsable.place(x=410, y=90)
-    responsable_e= ctk.CTkComboBox(master=formulaire, width=250, height=30, fg_color=set.col_fg, border_width=1, 
-                            border_color=set.col_border, values=options, button_color=set.col_border,button_hover_color=set.col_hover,
-                            font=('Montsérrat', 12,),dropdown_font=('Montsérrat',15), text_color= set.col_text, dropdown_text_color= set.col_text,
-                            dropdown_fg_color= set.col_fg, dropdown_hover_color=set.col_hover, corner_radius=0,
-                            )
+    responsable = ctk.CTkLabel(formulaire, text='Responsable :', font= ("Montsérrat",18), text_color=set.col_noir_1,
+                               fg_color= set.col_blanc_4)
+    responsable.place(x=5, y=330)
+    responsable_e= ctk.CTkComboBox(master=formulaire, width=190, height=30, fg_color=set.col_blanc_4, border_width=1, 
+                            values=options, font=('Montsérrat', 12,), text_color= set.col_noir_1,  corner_radius=5)
    
-    responsable_e.place(x=570, y= 90)
+    responsable_e.place(x=125, y= 330)
 
 
     #Les boutons
-    rechercher_cons = ctk.CTkButton(formulaire, text = "Rechercher",width=175,height=25,command= recherche,font=('Montsérrat', 20),
+    rechercher_cons = ctk.CTkButton(formulaire, text = "Rechercher",width=150, height=30,command= recherche,font=('Montsérrat', 15),
                                    fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    rechercher_cons.place(x=5, y=250)
+    rechercher_cons.place(x=10, y=400)
     
-    enregistrer_cons = ctk.CTkButton(formulaire, text = "Enregistrer",width=175,height=25,command= enregistrer,font=('Montsérrat', 20),
+    enregistrer_cons = ctk.CTkButton(formulaire, text = "Enregistrer",width=150, height=30,command= enregistrer,font=('Montsérrat', 15),
                                     fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    enregistrer_cons.place(x=215, y=250)
+    enregistrer_cons.place(x=165, y=400)
 
-    modifier_cons = ctk.CTkButton(formulaire, text = "Modifier",width=175,height=25,command= modifier,font=('Montsérrat', 20),
+    modifier_cons = ctk.CTkButton(formulaire, text = "Modifier",width=150, height=30,command= modifier,font=('Montsérrat', 15),
                                  fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    modifier_cons.place(x=435, y=250)
+    modifier_cons.place(x=10, y=460)
 
-    supprimer_cons = ctk.CTkButton(formulaire, text = "Supprimer",width=175,height=25, command = supprimer,font=('Montsérrat', 20),
+    supprimer_cons = ctk.CTkButton(formulaire, text = "Supprimer",width=150, height=30, command = supprimer,font=('Montsérrat', 15),
                                   fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    supprimer_cons.place(x=650, y=250)
+    supprimer_cons.place(x=165, y=460)
 
 
     #Listes des services
     listes_serv = gp.get_services()
 
-    liste_serv = ctk.CTkLabel(framescrol, text= "Liste des services".upper(), fg_color=set.col_fg,
-                             font = ('Montsérrat', 20), text_color= set.col_text , bg_color=set.col_bg)
-    liste_serv.place(x=75, y=350)
 
-    frame_serv = ctk.CTkScrollableFrame(framescrol, width=800, height=220, border_color=set.col_border, border_width=1,
-                                             fg_color=set.col_fg, bg_color= set.col_bg, orientation='vertical',
-                                             scrollbar_fg_color=set.col_fg)
-    frame_serv.place(x=75 , y=400)
+    frame_serv = ctk.CTkScrollableFrame(framescrol, width=600, height=500, border_width=1, corner_radius=5,
+                                             fg_color=set.col_blanc_4, orientation='vertical')
+    frame_serv.place(x=10 , y=25)
+
+    liste_serv = ctk.CTkLabel(framescrol, text= "Liste des services".upper(), fg_color=set.col_blanc_4,
+                             font = ('Montsérrat', 15), text_color= set.col_noir_1 )
+    liste_serv.place(x=55, y=10)
 
     style_serv = ttk.Style()
     style_serv.configure("Treeview.Heading", font=('Helvetica', 15, 'bold'), rowheight=20, foreground=set.col_fg)
@@ -321,7 +323,7 @@ def services(framescrol):
     
     # Définir les en-têtes
     tree_serv.column('nom_serv', width=200)
-    tree_serv.column('id_serv', width=50) 
+    tree_serv.column('id_serv', width=75) 
     tree_serv.column('prenom_emp', width=250)
     tree_serv.heading('id_serv', text='ID')
     tree_serv.heading('nom_serv', text='Nom ')
@@ -332,4 +334,4 @@ def services(framescrol):
  
     for ligne in listes_serv:
         tree_serv.insert('', tk.END, values=ligne)
-    tree_serv.pack()
+    tree_serv.pack(pady=20)

@@ -6,6 +6,8 @@ import tkinter as tk
 import graphi_print as gp
 import setting as set
 
+
+
 def categories(framescrol):
 
 
@@ -150,78 +152,80 @@ def categories(framescrol):
     """CATEGORIES DE CONSOMMANBLES"""
     #Définition des catégories de consommables
     #zone
-    cat = ctk.CTkFrame(framescrol, width=990, height=650, fg_color=set.col_fg, bg_color=set.col_bg,
+    cat = ctk.CTkFrame(framescrol, width=990, height=650, fg_color=set.col_blanc_4, 
                          border_color=set.col_border, border_width=1,corner_radius=0)
     cat.place(x= 0, y= 0)
 
     #zone du formulaire
-    zone_forme = ctk.CTkFrame(cat,width=810, height=170, fg_color=set.col_fg, bg_color=set.col_bg,
-                         border_color=set.col_border, border_width=1)
-    zone_forme.place(x=80,y=20)
+    zone_forme = ctk.CTkFrame(cat,width=350, height=360, fg_color=set.col_blanc_4, corner_radius=5,
+                         border_color=set.col_noir_1, border_width=1)
+    zone_forme.place(x=15,y=50)
 
     #Définition des éléments
     #Formulaire
-    liste_cat = ctk.CTkLabel(cat, text= "FORMULAIRE", fg_color=set.col_fg,font = ('Montsérrat', 20),
-                             text_color = set.col_text)
-    liste_cat.place(x=85, y=5 )
+    liste_cat = ctk.CTkLabel(cat, text= "FORMULAIRE", fg_color=set.col_blanc_4,font = ('Montsérrat', 20),
+                             text_color = set.col_noir_1)
+    liste_cat.place(x=30, y=35 )
 
     
 
-    id_cat_l = ctk.CTkLabel(zone_forme, text= "Identifiant", fg_color=set.col_fg,font = ('Montsérrat', 20), text_color=set.col_text)
+    id_cat_l = ctk.CTkLabel(zone_forme, text= "ID :", fg_color=set.col_blanc_4, font = ('Montsérrat', 15), text_color=set.col_noir_1)
     id_cat_l.place(x= 10, y=50)
 
-    id_cat_e = ctk.CTkEntry(zone_forme,placeholder_text='0',justify='right' ,fg_color=set.col_fg, width=100,height=30,
-                            font = ('Montsérrat', 20),corner_radius=0, placeholder_text_color=set.col_placeholder,
-                            text_color=set.col_text)
-    id_cat_e.place(x= 125, y=50)
+    id_cat_e = ctk.CTkEntry(zone_forme,placeholder_text='0',justify='right' ,fg_color=set.col_blanc_4, width=250,height=30,
+                            font = ('Montsérrat', 15),corner_radius=5, placeholder_text_color=set.col_placeholder,
+                            text_color=set.col_noir_1)
+    id_cat_e.place(x= 80, y=50)
     
     #Identifiant
-    nom_cat_l = ctk.CTkLabel(zone_forme, text= "Nom", fg_color=set.col_fg,font = ('Montsérrat', 20) , text_color= set.col_text)
-    nom_cat_l.place(x= 250, y=50)
-    nom_cat_e = ctk.CTkEntry(zone_forme,placeholder_text='Catégorie name',justify='left' ,fg_color=set.col_fg, width=470,height=30,
-                            font = ('Montsérrat', 20),  placeholder_text_color=set.col_placeholder, corner_radius=0,
-                            text_color=set.col_text)
-    nom_cat_e.place(x= 325, y=50)
+    nom_cat_l = ctk.CTkLabel(zone_forme, text= "Nom :", fg_color=set.col_blanc_4, font = ('Montsérrat', 15) , text_color= set.col_noir_1)
+    nom_cat_l.place(x= 10, y=150)
+    nom_cat_e = ctk.CTkEntry(zone_forme,placeholder_text='Catégorie name',justify='left' ,fg_color=set.col_blanc_4, width=250,height=30,
+                            font = ('Montsérrat', 15),  placeholder_text_color=set.col_placeholder, corner_radius=5, 
+                            text_color=set.col_noir_1)
+    nom_cat_e.place(x= 80, y=150)
 
     #Les bouttons
-    rechercher_cat = ctk.CTkButton(zone_forme, text = "Rechercher",width=160,height=30,command= recherche,
+    rechercher_cat = ctk.CTkButton(zone_forme, text = "Rechercher",width=160,height=40,command= recherche,
                                    fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    rechercher_cat.place(x=10, y=110)
+    rechercher_cat.place(x=10, y=250)
     
-    enregistrer_cat = ctk.CTkButton(zone_forme, text = "Enregistrer",width=160,height=30,command= enregistrer,
+    enregistrer_cat = ctk.CTkButton(zone_forme, text = "Enregistrer",width=160,height=40,command= enregistrer,
                                     fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    enregistrer_cat.place(x=225, y=110)
+    enregistrer_cat.place(x=180, y=250)
 
-    modifier_cat = ctk.CTkButton(zone_forme, text = "Modifier",width=160,height=30,command= modifier,
+    modifier_cat = ctk.CTkButton(zone_forme, text = "Modifier",width=160,height=40,command= modifier,
                                  fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    modifier_cat.place(x=420, y=110)
+    modifier_cat.place(x=10, y=310)
 
-    supprimer_cat = ctk.CTkButton(zone_forme, text = "Supprimer",width=160,height=30, command = supprimer,
+    supprimer_cat = ctk.CTkButton(zone_forme, text = "Supprimer",width=160,height=40, command = supprimer,
                                   fg_color= set.col_btn_bg, hover_color= set.col_hover, corner_radius=0)
-    supprimer_cat.place(x=635, y=110)
+    supprimer_cat.place(x=180, y=310)
 
     #Affichage des categories
     listes_cat = gp.get_categories()
 
-    liste_cat = ctk.CTkLabel(cat, text= "Liste de catégories de consommables".upper(), fg_color=set.col_fg,
-                             font = ('Montsérrat', 20), text_color= set.col_text )
-    liste_cat.place(x=70, y=230)
 
-    frame_categorie = ctk.CTkScrollableFrame(cat, width=800, height=350, border_color=set.col_border, border_width=1,
-                                             fg_color=set.col_fg, bg_color= set.col_bg, orientation='vertical',
-                                             scrollbar_fg_color=set.col_fg)
-    frame_categorie.place(x=70 , y=270)
+    frame_categorie = ctk.CTkScrollableFrame(cat, width=500, height=350, border_width=1,
+                                             fg_color=set.col_blanc_4, orientation='vertical')
+    frame_categorie.place(x=400 , y=50)
+
+    liste_cat = ctk.CTkLabel(cat, text= "Liste de catégories de consommables".upper(), fg_color=set.col_blanc_4,
+                             font = ('Montsérrat', 20), text_color= set.col_noir_1 )
+    liste_cat.place(x=430, y=35)
+
+
 
     style = ttk.Style()
-    style.configure("Treeview.Heading", font=('Helvetica', 20, 'bold'), rowheight=10, foreground=set.col_fg)
-    style.configure("Treeview", font=('Helvetica', 15, 'bold'), rowheight=30,)
+    style.configure("Treeview.Heading", font=('Helvetica', 18, 'bold'), rowheight=10, foreground=set.col_fg)
+    style.configure("Treeview", font=('Helvetica', 13, 'bold'), rowheight=30,)
     tree_cat = ttk.Treeview(frame_categorie, columns=('id_cat', 'nom_cat'), show='headings', height=20)
 
     # Définir les en-têtes
-    tree_cat.column('nom_cat', width=800)
-    tree_cat.column('id_cat', width=200) 
+    tree_cat.column('nom_cat', width=500)
+    tree_cat.column('id_cat', width=100) 
     tree_cat.heading('id_cat', text='ID')
     tree_cat.heading('nom_cat', text='Nom de la catégorie')
     for ligne in listes_cat:
         tree_cat.insert('', tk.END, values=ligne)
-    tree_cat.pack()
+    tree_cat.pack(pady=20)

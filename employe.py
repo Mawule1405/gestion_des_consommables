@@ -31,8 +31,8 @@ def build_employee(frame):
     slide_frame.place(x=0, y=0)
 
     #zone d'affichage
-    aff_frame = ctk.CTkScrollableFrame(frame, width=975, height= 680, border_color= set.col_border, border_width=1,
-                                fg_color=set.col_fg, corner_radius=0)
+    aff_frame = ctk.CTkFrame(frame, width=975, height= 680,border_width=1,
+                                fg_color=set.col_blanc_4, corner_radius=0)
     aff_frame.place(x=200, y=0)
 
     #Les boutons

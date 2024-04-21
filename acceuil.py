@@ -5,6 +5,7 @@ import customtkinter as ctk
 import employe 
 import ressources as res
 import setting as set
+import statistique  as stat
 
 #fonction pour switcher entre les options
 def switch(indicator_lb,page):
@@ -63,9 +64,9 @@ onglet3_lb = ctk.CTkLabel(bar_menu,text='', width=150,height=1)
 onglet3_lb.place(x=300, y=28)
 
 #onglet 4
-onglet4 = ctk.CTkButton(bar_menu,text = "Approvisionnement", font= ('Montsérrat', 15),width=150, 
+onglet4 = ctk.CTkButton(bar_menu,text = "Statistiques", font= ('Montsérrat', 15),width=150, 
                         height=25,fg_color=set.col_btn_bg, corner_radius=0,
-                        command=lambda: switch(indicator_lb=onglet4_lb, page = page_d_aide))
+                        command=lambda: switch(indicator_lb=onglet4_lb, page = page_statistique))
 onglet4.place(x=450, y=2)
 onglet4_lb = ctk.CTkLabel(bar_menu,text='' , width=150,height=1)
 onglet4_lb.place(x=450, y=28)
@@ -112,5 +113,12 @@ def page_employe():
     emp = ctk.CTkFrame(root, width=1190, height=645, fg_color=set.col_bg)
     employe.build_employee(emp)
     emp.place(x=5,y=50)
+
+
+#Définition de la page de statistique
+def page_statistique():
+    statistique = ctk.CTkFrame(root, width=1190, height=645, fg_color=set.col_blanc_4)
+    stat.build_statistique(statistique)
+    statistique.place(x=5,y=50)
 
 root.mainloop()

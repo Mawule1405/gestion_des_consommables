@@ -21,27 +21,38 @@ def update_fenetre(frame):
 
 
 
-def enregistrer_la_selectionne(frame, toplevel,id_employe, les_produits_selectionnes):
+def enregistrer_la_selectionne(frame, toplevel,id_employe,date_commande, les_produits_selectionnes):
     """
     Procédure permettant d'en régistre les consommables sélectionner dans la table demander
     paramètres: id_employe : identifiant de l'employé qui à demander les consommables
-                les_produits_selectionnes: la liste des produits voulus par l'employé
+                date_commande: date à laquelle la commande a été effectué
+                les_produits_selectionnes: la liste des produits commandés: id_cons, qte_com
     """
     confirme = messagebox.askquestion("Confirmation de l'enrégistrement", "Etes vous sur d'enrégistrer les données qui vous aient été présenté.\n Une fois enrégistrer vous n'aurez plus le droit de les supprimées.\n Au besoins veillez vous contacter votre administrateur.")
     les_demandes = []
-    if confirme == "yes":
-        for consommable in les_produits_selectionnes:
-            les_demandes.append((id_employe,consommable[0], consommable[2], datetime.now().date()))
-            
-        if les_demandes :
-            resulat = gp.inserer_demande(les_demandes)
-            if resulat:
-                messagebox.showinfo("Enrégistrement", "Succès")
-                update_fenetre(frame)
-                toplevel.destroy()
-            else:
-                messagebox.showinfo("Enrégistrement", "Echec")
+    
+    
+    if confirme:
+        #insertion de la commande
+        id_com = gp.get_last_commande_id()
+        id_com+=1
+        reponse_insertion_commande = gp.inserer_commande((id_com, date_commande, id_employe))
+        if reponse_insertion_commande:
 
+            for consommable in les_produits_selectionnes:
+                les_demandes.append((id_com, consommable[0], consommable[2]))
+            
+            print(les_demandes)
+            if les_demandes :
+                resulat = gp.inserer_appartenir(les_demandes)
+                if resulat:
+                    messagebox.showinfo("Enrégistrement", "Succès")
+                    update_fenetre(frame)
+                    toplevel.destroy()
+                else:
+                    messagebox.showinfo("Enrégistrement", "Echec")
+        else:
+            messagebox.showerror("Insertion commande", "Echéc de l'opération !")
 
 def recuperation_des_champs_selectionner():
     """
@@ -70,6 +81,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
     employe = employe_entry.get()
     date_commande = date_entry.get() ; date_is_val = False
     id_emp = employe.split()[0] ; id_is_val = False
+    
 
     #verification de l'id de l'employé qui a effectué la commande
     try:
@@ -143,7 +155,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
         tree_cat = ttk.Treeview(tableau_consommables, columns=('id', 'nom', "qte_commande"), show='headings', height=20)
 
         # Définir les en-têtes
-        tree_cat.column('nom', width=400)
+        tree_cat.column('nom', width=550)
         tree_cat.column('id', width=100) 
         tree_cat.heading('id', text='ID')
         tree_cat.heading('nom', text='Nom du consommable')
@@ -155,30 +167,20 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
 
 
         #bouton fermer
-        fermer_btn = ctk.CTkButton(apercu_fen, text= 'Fermer', width=110,height=30,font=("Montsérrat",14), border_color=set.col_border,
-                                border_width=1, hover_color= set.col_hover, corner_radius=5,fg_color=set.col_rouge, command= apercu_fen.destroy)
+        fermer_btn = ctk.CTkButton(apercu_fen, text= 'Fermer', width=110,height=30,font=("Montsérrat",14), border_color=set.col_noir_1,
+                                border_width=1, hover_color= set.col_hover, corner_radius=5,fg_color=set.col_noir_5, command= apercu_fen.destroy)
         fermer_btn.place(x=450,y=600)
 
         #bouton confirmer
-        confirmation_btn = ctk.CTkButton(apercu_fen, text= 'Enrégistrer', width=110,height=30,font=("Montsérrat",14), border_color=set.col_border,
-                                border_width=1, hover_color= set.col_hover, corner_radius=5,fg_color=set.col_green,
-                                  command= lambda :enregistrer_la_selectionne(frame,apercu_fen,id_emp, les_conso_selectionnees))
+        confirmation_btn = ctk.CTkButton(apercu_fen, text= 'Enrégistrer', width=110,height=30,font=("Montsérrat",14), border_color=set.col_noir_1,
+                                border_width=1, hover_color= set.col_hover, corner_radius=5,fg_color=set.col_noir_5,
+                                  command= lambda :enregistrer_la_selectionne(frame,apercu_fen,id_emp,date_commande, les_conso_selectionnees))
         confirmation_btn.place(x=40,y=600)
 
         apercu_fen.mainloop()
 
    
-        
-
-def on_entry_change(value):
-    # Perform your validation or control logic here
-    # For example, check if the value is an integer
-    if value.isdigit():
-        # Value is an integer, proceed as needed
-        print(value)
-    else:
-        # Value is not an integer, handle error or provide feedback
-        print('Mauvaise valeur ', value)
+    
 
 def inserer_entry_disable(element, entry):
     """
@@ -221,7 +223,7 @@ def build_ligne(cons, formulaire,fonction):
     inserer_entry_disable(0, qtedonne_l)
     #checkbox de selection du consommable à fournir à l'employé
     select_var = tk.IntVar()
-    select_l = ctk.CTkCheckBox(conso_frame,variable=select_var, text= "",fg_color=set.col_rouge, width=50, text_color= set.col_noir_1,
+    select_l = ctk.CTkCheckBox(conso_frame,variable=select_var, text= "",fg_color=set.col_noir_1, width=50, text_color= set.col_noir_1,
                                corner_radius=0,hover_color= set.col_hover , border_width= 1,
                                 height=30,command= lambda: fonction(qtedonne_l,select_l))
     select_l.place(x=600, y=5)
@@ -320,7 +322,7 @@ def approvisionner(aff_frame):
             select_all_label.place(x=530, y=5)
             all_select = ctk.CTkCheckBox(conso_ente,variable= all_click,text="", font=('Montsérrat', 20),
                                         corner_radius=0,border_color=set.col_noir_1,hover_color= set.col_hover, border_width= 1,
-                                        fg_color= set.col_rouge,command=lambda: selectionne_all(lignes))
+                                        fg_color= set.col_noir_1,command=lambda: selectionne_all(lignes))
             all_select.place(x=595, y=5)
             
             for cons in les_conso:
@@ -337,10 +339,11 @@ def approvisionner(aff_frame):
     """
         Un methode qui permet de gérer les attributs de commables à un employé
     """
-    titre = ctk.CTkLabel(aff_frame, text="Formulaire d'enregistrement de commandes".upper(), font= ("Montsérrat", 20,"bold"),
-                         fg_color=set.col_rouge, text_color= set.col_text)
+    titre = ctk.CTkLabel(aff_frame, text="Formulaire d'enregistrement de commandes".upper(), font= ("Montsérrat", 15,"bold"),
+                         fg_color=set.col_blanc_4, text_color= set.col_noir_1)
     titre.place(x=150, y=10)
-    formulaire = ctk.CTkScrollableFrame(aff_frame, width=700, height=560, fg_color=set.col_blanc_4, corner_radius=0)
+    formulaire = ctk.CTkScrollableFrame(aff_frame, width=700, height=500, fg_color=set.col_blanc_4, corner_radius=5,
+                                        border_width=1)
     formulaire.place(x=150,y=50)
 
 
@@ -376,10 +379,10 @@ def approvisionner(aff_frame):
     date_de_la_commande.place(x=520, y=5)
 
     #btn ajouter et supprimer consommable a enregistrer dans  le compte de employé
-    apercu_des_choix = ctk.CTkButton(aff_frame, text = "Voir tous les choix".upper(),width=30,height=40, fg_color=set.col_green,
+    apercu_des_choix = ctk.CTkButton(aff_frame, text = "Voir tous les choix".upper(),width=30,height=40, fg_color=set.col_noir_5,
                                      corner_radius=5, hover_color= set.col_hover,font=('Montsérrat', 10),
                                      command= lambda: apercu_des_consommables_selectionner(aff_frame,employe_c,date_de_la_commande) )
-    apercu_des_choix.place(x=10, y= 550)
+    apercu_des_choix.place(x=750, y= 580)
 
 
     #Affiches tous les catégories

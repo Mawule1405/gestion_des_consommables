@@ -11,6 +11,12 @@ import setting as set
 image_path = ""
 
 def enregistrement(frame):
+
+
+
+    frame_c = ctk.CTkFrame(frame, fg_color=set.col_blanc_4, border_width=1, corner_radius=5, 
+                           width=600 , height=600)
+    frame_c.place(x=200,y=20)
     #choisir une photo
     def choisir_photo():
         """Procedure qui permet de choisir une photo"""
@@ -23,8 +29,8 @@ def enregistrement(frame):
                 photo_emp.delete(0,tk.END)
                 photo_emp.insert(0,image_path)
                 image_pil = Image.open(image_path)
-                image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
-                label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
+                image_ctk = ctk.CTkImage(image_pil, size=(150, 150))
+                label_photo = ctk.CTkLabel(master=frame_c,text='', image=image_ctk)
                 label_photo.place(x=10, y=20)
                 app.destroy()
         except:
@@ -197,123 +203,120 @@ def enregistrement(frame):
 
     
     #photo
-    photo_emp = ctk.CTkEntry(frame,width=5,text_color="#000", bg_color="#000",fg_color="#000")
+    photo_emp = ctk.CTkEntry(frame_c,width=5)
     if image_path != "" and image_path !=None:
         photo_emp.insert(0,image_path)
         image_pil = Image.open(image_path)
-        image_ctk = ctk.CTkImage(image_pil, size=(200, 270))
-        label_photo = ctk.CTkLabel(master=frame,text='', image=image_ctk)
+        image_ctk = ctk.CTkImage(image_pil, size=(150, 150))
+        label_photo = ctk.CTkLabel(master=frame_c,text='', image=image_ctk)
         label_photo.place(x=10, y=20)
     else:
         photo_emp.insert(0,image_path)
 
-        label_photo = ctk.CTkLabel(master=frame,text=image_path, width=200, height=270, fg_color='#fff',
-                                   corner_radius=10)
+        label_photo = ctk.CTkLabel(master=frame_c,text=image_path, width=150, height=150, fg_color=set.col_noir_5,
+                                   corner_radius=5)
         label_photo.place(x=10, y=20)
 
+
     #Bouton pour changer l'image
-    changer_photo = ctk.CTkButton(frame, text="Choisir une image", width=200, height=35, fg_color=set.col_btn_bg,
-                                  hover_color=set.col_hover, command= lambda: choisir_photo(), corner_radius=0,
-                                  font=("Montsérrat", 20))
-    changer_photo.place(x=10, y=305)    
+    changer_photo = ctk.CTkButton(frame_c, text="Choisir une image", width=150, height=30, fg_color=set.col_noir_5,
+                                  command= lambda: choisir_photo(),
+                                  font=("Montsérrat", 15), corner_radius = 5)
+    changer_photo.place(x=10, y=200)    
 
     #nom
-    nom_lb =ctk.CTkLabel(frame, text="Nom",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                         text_color="#ff0",corner_radius=0)
-    nom_lb.place(x=250, y=20)
-    nom = ctk.CTkEntry(frame, placeholder_text="Nom", width=350, height=35, font=("Montsérrat", 18),
-                       border_color=set.col_border,border_width=1,fg_color=set.col_fg,corner_radius=0,
-                       text_color=set.col_text, placeholder_text_color=set.col_placeholder)
-    nom.place(x=250, y=50)
+    nom_lb =ctk.CTkLabel(frame_c, text="Nom :", height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                         text_color=set.col_noir_1, corner_radius=0)
+    nom_lb.place(x=170, y=20)
+    nom = ctk.CTkEntry(frame_c, placeholder_text="Nom", width=300, height=30, font=("Montsérrat", 13),
+                       border_width=1,fg_color=set.col_blanc_4, corner_radius=5,
+                       text_color=set.col_noir_1, placeholder_text_color=set.col_placeholder)
+    nom.place(x=270, y=20)
 
     #prenom
-    prenom_lb =ctk.CTkLabel(frame, text="Prénoms",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                            text_color="#ff0",corner_radius=0)
-    prenom_lb.place(x=620, y=20)
-    prenom = ctk.CTkEntry(frame, placeholder_text="Prénoms", width=350, height=35, font=("Montsérrat", 18),
-                          border_color=set.col_border,border_width=1,fg_color = set.col_fg,corner_radius=0,
-                          text_color=set.col_text, placeholder_text_color=set.col_placeholder)
-    prenom.place(x=620, y=50)
+    prenom_lb =ctk.CTkLabel(frame_c, text="Prénoms :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                            text_color=set.col_noir_1)
+    prenom_lb.place(x=170, y=70)
+    prenom = ctk.CTkEntry(frame_c, placeholder_text="Prénoms", width=300, height=30, font=("Montsérrat", 13),
+                          border_width=1 ,fg_color = set.col_blanc_4 ,corner_radius=5,
+                          text_color=set.col_noir_1, placeholder_text_color=set.col_placeholder)
+    prenom.place(x=270, y=70)
 
     #sexe
-    sexe_lb =ctk.CTkLabel(frame, text="Sexe",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                          text_color='#ff0',corner_radius=5)
-    sexe_lb.place(x=250, y=120)
-    sexe = ctk.CTkComboBox(master=frame, width=350, height=35, fg_color = set.col_fg, border_width=1, 
-                            border_color=set.col_border, values=["","Féminin", "Masculin"], button_color=set.col_border,
-                            button_hover_color=set.col_hover,font=('Montsérrat', 15),
-                            dropdown_font=('Montsérrat',15),text_color= set.col_text, dropdown_text_color= set.col_text,
-                            dropdown_fg_color= set.col_fg, dropdown_hover_color=set.col_hover, corner_radius=0,)
-    sexe.place(x=250, y=150)
+    sexe_lb =ctk.CTkLabel(frame_c, text="Sexe :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                          text_color=set.col_noir_1)
+    sexe_lb.place(x=170, y=120)
+    sexe = ctk.CTkComboBox(master=frame_c, width=300, height=30, fg_color = set.col_blanc_4, border_width=1, 
+                            values=["","Féminin", "Masculin"],font=('Montsérrat', 13), corner_radius=5,)
+    sexe.place(x=270, y=120)
 
     #nationalité
-    nationalite_lb =ctk.CTkLabel(frame, text="Nationalité",height=20, font = ('Montsérrat', 18), 
-                                 text_color='#ff0',fg_color = set.col_fg,corner_radius=5)
-    nationalite_lb.place(x=620, y=120)
-    nationalite = ctk.CTkEntry(frame, placeholder_text="Nationalités", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border,border_width=1,fg_color = set.col_fg, corner_radius=0,
-                               placeholder_text_color=set.col_placeholder,text_color=set.col_text)
-    nationalite.place(x=620, y=150)
+    nationalite_lb =ctk.CTkLabel(frame_c, text="Nationalité :",height=20, font = ('Montsérrat', 15), 
+                                 text_color=set.col_noir_1,fg_color = set.col_blanc_4 )
+    nationalite_lb.place(x=170, y=170)
+    nationalite = ctk.CTkEntry(frame_c, placeholder_text="Nationalité", width=300, height=30, font=("Montsérrat", 13)
+                               ,text_color=set.col_noir_1)
+    nationalite.place(x=270, y=170)
 
     #Lieu de residence
-    residence_lb =ctk.CTkLabel(frame, text="Lieu de résidence",height=20, font = ('Montsérrat', 18), 
-                               text_color='#ff0',fg_color = set.col_fg,corner_radius=5)
-    residence_lb.place(x=250, y=210)
-    residence = ctk.CTkEntry(frame, placeholder_text="Lieu de résidence", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border,border_width=1,fg_color = set.col_fg, corner_radius=0,
-                               placeholder_text_color=set.col_placeholder, text_color=set.col_text)
-    residence.place(x=250, y=240)
+    residence_lb =ctk.CTkLabel(frame_c, text="Lieu de résidence :",height=20, font = ('Montsérrat', 15), 
+                               text_color=set.col_noir_1, fg_color = set.col_blanc_4, corner_radius=5)
+    residence_lb.place(x=170, y=220)
+    residence = ctk.CTkEntry(frame_c, placeholder_text="Lieu de résidence", width=270, height=30, font=("Montsérrat", 13),
+                               border_width=1,fg_color = set.col_blanc_4, corner_radius=5,
+                               placeholder_text_color=set.col_placeholder, text_color=set.col_noir_1)
+    residence.place(x=300, y=220)
 
     #salaire
-    salaire_lb =ctk.CTkLabel(frame, text="Salaire en FCFA",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                             text_color='#ff0',corner_radius=5)
-    salaire_lb.place(x=620, y=210)
-    salaire = ctk.CTkEntry(frame, placeholder_text="Salaire en FCFA", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border,border_width=1,fg_color = set.col_fg, corner_radius=0,
-                               placeholder_text_color=set.col_placeholder, text_color=set.col_text)
-    salaire.place(x=620, y=240)
+    salaire_lb =ctk.CTkLabel(frame_c, text="Salaire en FCFA :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                             text_color=set.col_noir_1,corner_radius=5)
+    salaire_lb.place(x=170, y=270)
+    salaire = ctk.CTkEntry(frame_c, placeholder_text="Salaire en FCFA", width=270, height=30, font=("Montsérrat", 13),
+                               border_width=1, fg_color = set.col_blanc_4, corner_radius=5,
+                               placeholder_text_color=set.col_placeholder, text_color=set.col_noir_1)
+    salaire.place(x=300, y=270)
 
     #email
-    email_lb =ctk.CTkLabel(frame, text="Email",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                           text_color='#ff0',corner_radius=5)
-    email_lb.place(x=250, y=300)
-    email = ctk.CTkEntry(frame, placeholder_text="Email@exemple.gp", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border, text_color=set.col_text,border_width=1,fg_color = set.col_fg, corner_radius=0,
+    email_lb =ctk.CTkLabel(frame_c, text="Email :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                           text_color=set.col_noir_1 ,corner_radius=5)
+    email_lb.place(x=170, y=320)
+    email = ctk.CTkEntry(frame_c, placeholder_text="Email@exemple.gp", width=300, height=30, font=("Montsérrat", 13),
+                                text_color=set.col_noir_1,border_width=1,fg_color = set.col_blanc_4, corner_radius=5,
                                placeholder_text_color=set.col_placeholder)
-    email.place(x=250, y=330)
+    email.place(x=270, y=320)
 
     #telephone
-    telephone_lb =ctk.CTkLabel(frame, text="Téléphone",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                               text_color='#ff0',corner_radius=5)
-    telephone_lb.place(x=620, y=300)
-    telephone = ctk.CTkEntry(frame, placeholder_text="Téléphone", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border, text_color=set.col_text,border_width=1,fg_color = set.col_fg, corner_radius=0,
-                               placeholder_text_color=set.col_placeholder)
-    telephone.place(x=620, y=330)
+    telephone_lb =ctk.CTkLabel(frame_c, text="Téléphone :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                               text_color=set.col_noir_1, corner_radius=5)
+    telephone_lb.place(x=170, y=370)
+    telephone = ctk.CTkEntry(frame_c, placeholder_text="Téléphone", width=270, height=30, font=("Montsérrat", 13),
+                            text_color=set.col_noir_1,border_width=1,fg_color = set.col_blanc_4, corner_radius=5,
+                            placeholder_text_color=set.col_placeholder)
+    telephone.place(x=300, y=370)
 
     #date_nais
-    date_nais_lb =ctk.CTkLabel(frame, text="Date de naissance ",height=20, font = ('Montsérrat', 18), 
-                               text_color='#ff0',fg_color = set.col_fg,corner_radius=5)
-    date_nais_lb.place(x=250, y=395)
-    date_nais = ctk.CTkEntry(frame, placeholder_text="AAAA-MM-JJ", width=180, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border, text_color=set.col_text,border_width=1,fg_color = set.col_fg, corner_radius=0,
+    date_nais_lb =ctk.CTkLabel(frame_c, text="Date de naissance ",height=20, font = ('Montsérrat', 15), 
+                               text_color=set.col_noir_1, fg_color = set.col_blanc_4,corner_radius=5)
+    date_nais_lb.place(x=170, y=425)
+    date_nais = ctk.CTkEntry(frame_c, placeholder_text="AAAA-MM-JJ", width=180, height=30, font=("Montsérrat", 13),
+                               text_color=set.col_noir_1,border_width=1,fg_color = set.col_blanc_4, corner_radius=5,
                                placeholder_text_color=set.col_placeholder)
-    date_nais.place(x=420, y=390)
+    date_nais.place(x=170, y=450)
 
     #date_emb
-    date_emb_lb =ctk.CTkLabel(frame, text="Date d'embauche",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                              text_color='#ff0',corner_radius=5)
-    date_emb_lb.place(x=620, y=395)
-    date_emb = ctk.CTkEntry(frame, placeholder_text="AAAA-MM-JJ", width=180, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border, text_color=set.col_text,border_width=1,fg_color = set.col_fg, corner_radius=0,
+    date_emb_lb =ctk.CTkLabel(frame_c, text="Date d'embauche",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                              text_color=set.col_noir_1,corner_radius=5)
+    date_emb_lb.place(x=390, y=425)
+    date_emb = ctk.CTkEntry(frame_c, placeholder_text="AAAA-MM-JJ", width=180, height=30, font=("Montsérrat", 13),
+                               text_color=set.col_noir_1 ,border_width=1,fg_color = set.col_blanc_4, corner_radius=5,
                                placeholder_text_color=set.col_placeholder)
-    date_emb.place(x=780, y=390)
+    date_emb.place(x=390, y=450)
 
 
     #service
-    services_lb =ctk.CTkLabel(frame, text="Service",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                              text_color='#ff0',corner_radius=5)
-    services_lb.place(x=250, y=440)
+    services_lb =ctk.CTkLabel(frame_c, text="Service :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                              text_color=set.col_noir_1,corner_radius=5)
+    services_lb.place(x=170, y=500)
 
     services=["Choisir un service"]
     try:
@@ -324,29 +327,26 @@ def enregistrement(frame):
     except :
         messagebox.showwarning('Connexion échoué', """La tentative de connexion à la base de données a échoué.\nVeuillez vérifier le serveur de la base de données ou réessayer plutard!""")
     
-    service = ctk.CTkComboBox(master=frame, width=350, height=35, fg_color = set.col_fg, border_width=1, 
-                            border_color='#fff', values=services, button_color='#fff',
-                            button_hover_color='#000',font=('Montsérrat', 15),
-                            dropdown_font=('Montsérrat',15),text_color= set.col_text, dropdown_text_color= set.col_text,
-                            dropdown_fg_color= set.col_fg, dropdown_hover_color=set.col_hover, corner_radius=0,)
-    service.place(x=250, y=470)
+    service = ctk.CTkComboBox(master=frame_c, width=300, height=30, fg_color = set.col_blanc_4, border_width=1, 
+                             values=services ,font=('Montsérrat', 13),
+                            text_color= set.col_noir_1, corner_radius=5)
+    service.place(x=270, y=500)
 
     #niveau
-    niveau_lb =ctk.CTkLabel(frame, text="Niveau d'étude",height=20, font = ('Montsérrat', 18), fg_color = set.col_fg,
-                           text_color='#ff0',corner_radius=5)
-    niveau_lb.place(x=620, y=440)
-    niveau = ctk.CTkEntry(frame, placeholder_text="Niveau d'étude", width=350, height=35, font=("Montsérrat", 18),
-                               border_color=set.col_border, text_color=set.col_text,border_width=1,fg_color = set.col_fg, corner_radius=0,
-                               placeholder_text_color=set.col_placeholder)
-    niveau.place(x=620, y=470)
-
+    niveau_lb =ctk.CTkLabel(frame_c, text="Niveau d'étude :",height=20, font = ('Montsérrat', 15), fg_color = set.col_blanc_4,
+                           text_color=set.col_noir_1,corner_radius=5)
+    niveau_lb.place(x=170, y=550)
+    niveau = ctk.CTkEntry(frame_c, placeholder_text="Niveau d'étude", width=270, height=30, font=("Montsérrat", 13),
+                                text_color=set.col_noir_1, border_width=1,fg_color = set.col_blanc_4,
+                                corner_radius=5, placeholder_text_color=set.col_placeholder)
+    niveau.place(x=300, y=550)
 
 
 
     #bouton de soumission
-    soumettre = ctk.CTkButton(frame, text="Soumettre",width=200, height=40, fg_color = set.col_btn_bg,
-                              hover_color=set.col_hover, font=('Montsérrat', 20), command= lambda : enregistrer())
-    soumettre.place(x=10 , y=470)
+    soumettre = ctk.CTkButton(frame_c, text="Enregistrer",width=150, height=35, fg_color = set.col_noir_5,
+                            font=('Montsérrat', 20), command= lambda : enregistrer())
+    soumettre.place(x=10 , y=550)
 
 
 
