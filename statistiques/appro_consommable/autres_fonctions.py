@@ -158,6 +158,9 @@ def liste_com_eff_moi_annee():
 
 
 def liste_des_n_consommables():
+    """
+        Une procédure permettant de connaitre les n consommables les plus utilisés dans la société
+    """
     def valider():
         nombre = entry1.get()
         try:
@@ -210,6 +213,119 @@ def liste_des_n_consommables():
    
    
     liste_com = []
+  
+    for ligne in liste_com:
+
+        tree_com.insert('', tk.END, values=ligne)
+
+    tree_com.pack(fill= "both", pady=15, padx=10)
+
+
+
+    top.mainloop()
+
+
+def liste_des_cons_commande_categorie():
+    """
+    Procédure pour connaître les consommables plus commandés dans chaque catégories
+    """
+    top = ctk.CTkToplevel()
+    top.title("Liste des consommables les plus commandés dans chaque catégorie")
+    top.geometry('700x600+0+0')
+    top.resizable(width=False, height=False)
+    top.configure(fg_color = set.col_blanc_4)
+    top.attributes('-topmost', True)
+
+    frame = ctk.CTkFrame(top, fg_color=set.col_blanc_4, border_width=2, border_color=set.col_noir_1, height=550)
+    frame.pack(fill='both', pady=20, padx= 15)
+   
+
+    tableau = ctk.CTkScrollableFrame(frame,height=500, width=620, fg_color=set.col_blanc_4, border_width=1, corner_radius=5)
+    tableau.place(x= 10, y= 10)
+
+    style_com = ttk.Style()
+    style_com.configure("Treeview.Heading", font=('Helvetica', 14, 'bold'), rowheight=5, foreground=set.col_fg)
+    style_com.configure("Treeview", font=('Helvetica', 12, 'bold'), rowheight=30,)
+    tree_com = ttk.Treeview(tableau, columns=('id_cons', 'nom_cons',"nombre_cons"),
+                             show='headings', height=50)
+
+    # Définir les en-têtes
+    tree_com.column('id_cons', width=75) 
+    tree_com.column('nom_cons', width=300) 
+    tree_com.heading('id_cons', text='ID')
+    tree_com.heading('nom_cons', text='Nom')
+    tree_com.heading('nombre_cons', text='Nombre')
+   
+   
+    liste_com = gp.liste_des_conso_commande_cat()
+  
+    for ligne in liste_com:
+
+        tree_com.insert('', tk.END, values=ligne)
+
+    tree_com.pack(fill= "both", pady=15, padx=10)
+
+
+
+    top.mainloop()
+
+
+
+def liste_des_cons_commande_employe():
+    """
+    Procédure pour connaître les consommables plus commandés dans chaque catégories
+    """
+
+    def valider():
+        id_emp = choix_emp.get().split()[0]
+        id_emp=int(id_emp)
+
+        supprimer_tout_le_tree(tree_com)
+        employes = gp.liste_conso_commande_employe(id_emp)
+        for emp in employes:
+            tree_com.insert('', tk.END, values=emp)
+
+
+    top = ctk.CTkToplevel()
+    top.title("Liste des consommables les plus commandés dans chaque catégorie")
+    top.geometry('700x600+0+0')
+    top.resizable(width=False, height=False)
+    top.configure(fg_color = set.col_blanc_4)
+    top.attributes('-topmost', True)
+
+    frame = ctk.CTkFrame(top, fg_color=set.col_blanc_4, border_width=2, border_color=set.col_noir_1, height=550)
+    frame.pack(fill='both', pady=20, padx= 15)
+
+    employes = gp.get_employes()
+    options  = [str(emp[0])+" "+emp[1]+" "+emp[2]  for emp in employes]
+
+    #Choix d'un employé
+    choix_emp = ctk.CTkComboBox(frame, fg_color=set.col_blanc_4, width=300, height=30,values= options,
+                                corner_radius=5, border_width=1)
+    choix_emp.place(x= 100, y=15)
+
+    #Button de validation pour lancer la recherhe
+    validation_btn = ctk.CTkButton(frame, fg_color= set.col_noir_5, width=100, text= "VALIDER", height=30, command= valider
+                                   )
+    validation_btn.place(x=450, y=15)
+
+    tableau = ctk.CTkScrollableFrame(frame,height=400, width=620, fg_color=set.col_blanc_4, border_width=1, corner_radius=5)
+    tableau.place(x= 10, y= 80)
+
+    style_com = ttk.Style()
+    style_com.configure("Treeview.Heading", font=('Helvetica', 14, 'bold'), rowheight=5, foreground=set.col_fg)
+    style_com.configure("Treeview", font=('Helvetica', 12, 'bold'), rowheight=30,)
+    tree_com = ttk.Treeview(tableau, columns=('nom_cons', 'date_com',"prix_cons","nombre_cons"),
+                             show='headings', height=50)
+
+    # Définir les en-têtes
+    tree_com.heading('nom_cons', text='Consommables')
+    tree_com.heading('date_com', text='Date')
+    tree_com.heading('prix_cons', text='Prix (FCFA)')
+    tree_com.heading('nombre_cons', text='Nombre')
+   
+   
+    liste_com = gp.liste_conso_commande_employe(1)
   
     for ligne in liste_com:
 
