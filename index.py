@@ -4,6 +4,7 @@ from tkinter import messagebox
 import tkinter
 from PIL import Image, ImageTk
 import graphi_print as gp
+import setting as set
 
 #Definition de la logique
 def apercu_check():
@@ -56,10 +57,9 @@ fen.resizable(width = False, height = False)
 #Definition de la zone de connexion
 zone_de_con = ctk.CTkFrame(fen, width = 300, height =400, border_color="#fff",)
 
-#Définition de l'image de fond
-image_pil = Image.open("./gestion_des_consommables-main/images/images_app/bg_page_connexion.png")
-image_tk = ImageTk.PhotoImage(image_pil)
-label_image = tkinter.Label(fen, image=image_tk,width=500,height=900)
+
+label_image = ctk.CTkLabel(fen, text= "",width=200,height=500,fg_color=set.col_noir_1
+                            )
 label_image.place(x=0, y=0)
 
 #Définition de l'entete
@@ -77,13 +77,13 @@ mot_de_passe = ctk.CTkEntry(zone_de_con, placeholder_text="Entrer le mot de pass
 mot_de_passe.place(x= 25 , y= 150)
 
 #Definition du checkbox pour apercevoir le mot de passe
-apercu = ctk.CTkCheckBox(zone_de_con, text="Aperçu du mot de passe", hover_color= '#000',checkmark_color='#fff',
-                         fg_color="#f00",font=('Montserrat', 18), command= apercu_check)
+apercu = ctk.CTkCheckBox(zone_de_con, text="Aperçu du mot de passe", hover_color= set.col_hover,checkmark_color=set.col_white,
+                         fg_color=set.col_noir_1,font=('Montserrat', 18), command= apercu_check)
 apercu.place(x= 25 , y=220)
 
 #Définition du bouton de validation
 validation = ctk.CTkButton(zone_de_con, text="Connecter", width=250, height=35, font=('Montserrat', 20, "bold"),
-                           hover_color='#1a662e', fg_color='#005221',command= lambda : valider())
+                           hover_color=set.col_hover, fg_color=set.col_noir_1,command= lambda : valider())
 validation.place(x= 25, y=280)
 
 zone_de_con.place(x = 200,y = 0)

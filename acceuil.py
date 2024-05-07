@@ -7,6 +7,9 @@ import ressources as res
 import setting as set
 import statistique  as stat
 import construire_accueil as ca
+from datetime import datetime
+
+
 
 #fonction pour switcher entre les options
 def switch(indicator_lb,page):
@@ -22,7 +25,11 @@ def switch(indicator_lb,page):
         root.update()
     page()
 
-
+def update_time():
+    now = datetime.now()
+    date_time = now.strftime("%d/%m/%Y   %H:%M:%S")
+    horaire.configure(text=date_time)
+    root.after(1000, update_time)  
 
 
 
@@ -40,6 +47,10 @@ root.resizable(width=False, height=False)
 bar_menu = ctk.CTkFrame(root, width=1200, height=50, fg_color=set.col_noir_1, corner_radius=0)
 bar_menu.place(x=0, y=0)
 
+horaire = ctk.CTkLabel(bar_menu,text = "", width=150, font=("Montsérrat" , 30), fg_color=set.col_noir_1,
+                       text_color=set.col_blanc_4)
+horaire.place(x=875, y= 5)
+update_time()
 #Définition des onglets de la barre de menu
 #onglet 1
 onglet1_lb = ctk.CTkLabel(bar_menu,text='', fg_color=set.col_blanc_1, width=150,height=1)
@@ -103,7 +114,7 @@ zone.place(x=5, y=50)
 #Definition des pages
 #Définition de la page d'acceuil
 def page_acceuil():
-    home = ctk.CTkFrame(root, width=1200, height=645, fg_color=set.col_blanc_4, bg_color=set.col_bg,
+    home = ctk.CTkFrame(root, width=1200, height=645, fg_color=set.col_blanc_4,
                                   border_width=0)
     home.place(x=5,y=50)
     ca.build_accueil(home)
@@ -111,7 +122,7 @@ page_acceuil()
 
 #definition de la page ressource
 def page_ressources():
-    home = ctk.CTkFrame(root, width=1200, height=645, fg_color=set.col_blanc_4, bg_color=set.col_bg,
+    home = ctk.CTkFrame(root, width=1200, height=645, fg_color=set.col_blanc_4,
                                   border_color=set.col_border,border_width=0)
     home.place(x=5,y=50)
     res.build_home(home)

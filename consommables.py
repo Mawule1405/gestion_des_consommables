@@ -4,6 +4,7 @@ import tkinter as tk
 
 import setting as set
 import graphi_print as gp
+import un_consommable as uncons
 
 
 
@@ -255,8 +256,8 @@ def consommables(framescrol):
 
     
     #zone
-    conso = ctk.CTkFrame(framescrol, width=1150, height=650, fg_color=set.col_blanc_4, bg_color=set.col_bg,
-                         border_color=set.col_border, border_width=1)
+    conso = ctk.CTkFrame(framescrol, width=1150, height=650, fg_color=set.col_blanc_4,
+                         border_color=set.col_border,)
     conso.place(x= 0 , y=0)
 
     """Formulaire"""
@@ -346,4 +347,14 @@ def consommables(framescrol):
                                ,font=('Montsérrat', 15), fg_color= set.col_noir_5, hover_color= set.col_hover, corner_radius=5)
     voir_liste.place(x=400, y=590)
 
-    
+def consommable(framescrol):
+    liste_cons = ctk.CTkScrollableFrame(framescrol, height=630,width=970)
+    liste_cons.pack(fill = 'both')
+    """
+    liste_des_consommables = gp.get_consommables()
+    for cons in liste_des_consommables:
+        uncons.build_consommable(cons[0] ,liste_cons)
+    """
+   
+    uncons.build_consommable(1,liste_cons)
+    uncons.build_consommable(2,liste_cons)

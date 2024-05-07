@@ -74,7 +74,7 @@ def build_home(framescrol):
     page_categories()
 
     def page_consommable():
-        cons.consommables(aff_frame)
+        cons.consommable(aff_frame)
 
     def page_attribution():
         attr.attribuer(aff_frame)

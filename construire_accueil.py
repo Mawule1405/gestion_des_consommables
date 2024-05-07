@@ -23,7 +23,7 @@ def build_scroll_text(frame,titre):
     canvas.pack()
 
     # Ajouter du texte au canevas
-    text_id = canvas.create_text(0, 100, anchor="w", text=titre, font=("Montsérrat", 75, "bold"))
+    text_id = canvas.create_text(0, 100, anchor="w", text=titre, font=("Montsérrat", 50, "bold"))
 
     # Appeler la fonction pour démarrer l'animation de défilement du texte
     scroll_text(canvas, text_id, dx=2)
@@ -74,18 +74,26 @@ def update_time(canvas, hour_hand, minute_hand, second_hand):
 
 def build_accueil(frame):
     # Créer un canevas pour dessiner la montre
-   
-    titre = ctk.CTkFrame(frame, width = 800, height=10, fg_color=set.col_blanc_4, )
-    titre.place(x=100,y=250)
-    canvas = ctk.CTkCanvas(frame, width=300, height=300, bg=set.col_blanc_4,
-                           highlightbackground=set.col_blanc_4, highlightthickness=2,  )
-    canvas.place(x=600, y= 10)
-    
-    build_scroll_text(titre,"GRAPHIPRINT")
-    draw_watch(canvas)
+    titre = ctk.CTkFrame(frame, width = 800, height=10)
+    titre.place(x=100,y=0)
+    image_path = "images/images_app/papeterie.png"
+    image = Image.open(image_path)
+    image_final = ctk.CTkImage(image, size=(1000, 600))
+    photo = ctk.CTkLabel(frame, image=image_final)
+    photo.place(x=50, y=100)
 
-    information = ctk.CTkFrame(frame, width = 1100, height=150, fg_color=set.col_blanc_4, border_color="red" , border_width=2, )
-    information.place(x=50,y=400)
+   
+    """canvas = ctk.CTkCanvas(frame, width=300, height=300,
+                             )
+    canvas.place(x=600, y= 10)"""
+    build_scroll_text(titre,"GRAPHIPRINT")
+    #draw_watch(canvas)
+    
+
+    
+    
+
+
     
 
 

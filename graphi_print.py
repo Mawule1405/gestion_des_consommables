@@ -255,8 +255,8 @@ def supprimer_categories(id, host_x='localhost', user_x='root', password_x='', d
 #==================================GESTIONS DES CONSOMMABLES==============================================
 
 def get_consommables(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """Fonction de récupération des catégories"""
-    sql="SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, nom_cat FROM Consommable co, Categorie ca WHERE co.id_cat = ca.id_cat  ORDER BY id_cons"
+    """Fonction de récupération des consommables"""
+    sql="SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, nom_cat, image FROM Consommable co, Categorie ca WHERE co.id_cat = ca.id_cat  ORDER BY id_cons"
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -267,7 +267,7 @@ def get_consommables(host_x='localhost', user_x='root', password_x='', database_
 
 def get_consommables_by_cat(id_cat,host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """Fonction de récupération des catégories"""
-    sql=f"SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons FROM Consommable co WHERE co.id_cat = {id_cat}  ORDER BY id_cons"
+    sql=f"SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, image  FROM Consommable co WHERE co.id_cat = {id_cat}  ORDER BY id_cons"
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -282,7 +282,7 @@ def get_consommables_by_id_cons(id_cons,host_x='localhost', user_x='root', passw
     Une fonction de récupération d'un consommable à partir de son id
     """
    
-    sql=f"""SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, ca.id_cat, ca.nom_cat
+    sql=f"""SELECT id_cons, nom_cons, qtestock_cons, qteseuil_cons, prix_unitaire_cons, ca.id_cat, ca.nom_cat, image
             FROM Consommable co, Categorie ca 
             WHERE co.id_cons = {id_cons} AND co.id_cat = ca.id_cat
             """
@@ -458,6 +458,37 @@ def inserer_demande(information, host_x='localhost', user_x='root', password_x='
         bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
         curseur = bdd.cursor()
         curseur.executemany(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
+
+def inserer_one_demande(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """
+        fonction d'insertion de gestion de l'attribution d'un consopmmable attribuer à un employé
+        @param information tuple(id_emp, id_cons, qte_demande, date_demande)
+        @return: Boolean
+    """
+    sql = """INSERT INTO Demander
+                 (id_emp,
+                 id_cons,
+                 qte_demande,
+                 date_demande
+             )
+             
+             VALUES (%s, %s, %s, %s)"""
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql, information)
         bdd.commit()
         return True
     except Exception as e:
