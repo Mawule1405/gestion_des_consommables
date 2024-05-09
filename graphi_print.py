@@ -55,7 +55,7 @@ def get_one_categories(id_cat = 0,host_x='localhost', user_x='root', password_x=
 
 
 def get_services(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    sql="SELECT s.id_serv, nom_serv, description_serv, date_serv, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp"
+    sql="SELECT s.id_serv, nom_serv, description_serv, date_serv, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp ORDER BY s.id_serv"
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -74,14 +74,14 @@ def get_one_service(id,host_x='localhost', user_x='root', password_x='', databas
 
 def inserer_service(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     sql = """INSERT INTO Service
-                 (id_serv,
+                 (
                  nom_serv,
                  description_serv,
                  date_serv,
                  id_emp_resp
              )
              
-             VALUES (%s, %s,%s,%s,%s)"""
+             VALUES ( %s,%s,%s,%s)"""
     bdd = None
     curseur = None
     try:
@@ -134,7 +134,8 @@ def supprimer_service(id, host_x='localhost', user_x='root', password_x='', data
     
     
     sql = f"""DELETE FROM Service
-             WHERE id_serv = {id} """
+            WHERE id_serv = {id} AND
+            id_serv NOT IN (SELECT id_serv FROM Employe)"""
     
     bdd = None
     curseur = None

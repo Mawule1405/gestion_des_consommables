@@ -1,5 +1,5 @@
 import customtkinter as ctk
-
+from PIL import Image
 
 
 
@@ -41,6 +41,12 @@ def build_statistique(statFrame):
                                 fg_color=set.col_blanc_4, corner_radius=0)
     aff_frame.place(x=200, y=0)
 
+    fond_image_path = "images/image_consommable/pngwing.com (1).png"
+    fond_image = Image.open(fond_image_path)
+    image = ctk.CTkImage(fond_image, size=(600,600))
+
+    fond = ctk.CTkLabel(aff_frame,text=0,image=image)
+    fond.place(x=0, y=0)
 
     #Les boutons présentants les grandes fonctionnalités de l'application
     aside_frame = ctk.CTkFrame(slide_frame, height=800,fg_color=set.col_noir_1)

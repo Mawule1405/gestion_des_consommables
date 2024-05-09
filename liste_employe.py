@@ -1,7 +1,7 @@
 
 import customtkinter as ctk
 from tkinter import messagebox
-from PIL import Image, ImageTk
+from PIL import Image
 #--------
 import graphi_print as gp
 import employe_modifier as em
@@ -11,13 +11,20 @@ import exportation as ex
 import setting as set
 
 def presenter_employer(employees, framescroll):
-        listeFrame= ctk.CTkScrollableFrame(framescroll, width=750, height=600,fg_color=set.col_blanc_4, 
-                                           border_color=set.col_noir_1, border_width=2)
+        listeFrame= ctk.CTkScrollableFrame(framescroll, width=800, height=600,fg_color=set.col_blanc_4, 
+                                           border_color=set.col_noir_1, border_width=0)
         listeFrame.place(x=125,y=20)
     
         for el in employees:
             frame_emp = ctk.CTkFrame(listeFrame, width=750, height= 300, border_width=1,fg_color=set.col_blanc_4)
             frame_emp.pack(pady=10, padx=5)
+
+            fond_image_path = "images/image_consommable/pngwing.com (1).png"
+            fond_image = Image.open(fond_image_path)
+            image = ctk.CTkImage(fond_image, size=(750,300))
+
+            fond = ctk.CTkLabel(frame_emp,text=0,image=image)
+            fond.place(x=0, y=0)
             #Numero
             label_emp =ctk.CTkLabel(frame_emp,text="Information de l'employé N° :"+str(el[0]), font=('Montsérrat', 15,  "bold", 'underline'), text_color=set.col_noir_1)
             label_emp.place(x=10,y=10)

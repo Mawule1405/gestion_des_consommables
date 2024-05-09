@@ -17,7 +17,12 @@ def modifier(frame):
                            width=600 , height=600)
     frame_c.place(x=200,y=20)
 
+    fond_image_path = "images/image_consommable/pngwing.com (1).png"
+    fond_image = Image.open(fond_image_path)
+    image = ctk.CTkImage(fond_image, size=(600,600))
 
+    fond = ctk.CTkLabel(frame_c,text=0,image=image)
+    fond.place(x=0, y=0)
 
     image_path = ""
     #choisir une photo

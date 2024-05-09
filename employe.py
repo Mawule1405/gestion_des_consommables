@@ -42,6 +42,13 @@ def build_employee( frame):
                                 fg_color=set.col_blanc_4, corner_radius=0)
     aff_frame.place(x=200, y=0)
 
+    fond_image_path = "images/image_consommable/pngwing.com (1).png"
+    fond_image = Image.open(fond_image_path)
+    image = ctk.CTkImage(fond_image, size=(800,680))
+
+    fond = ctk.CTkLabel(aff_frame,text=0,image=image)
+    fond.place(x=0, y=0)
+
     #Les boutons
     apercu = ctk.CTkButton(slide_frame,text='Liste des employés'.upper(),width=190, height=40, fg_color=set.col_noir_1,
                            corner_radius=0, hover_color=set.col_hover,
