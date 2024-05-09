@@ -1,8 +1,8 @@
 import customtkinter as ctk
 from tkinter import ttk , messagebox
-
 import tkinter as tk
 from datetime import datetime
+from PIL import Image
 
 import setting as set
 import graphi_print as gp
@@ -242,6 +242,12 @@ def approvisionner(aff_frame):
     Procédure de gestion des attributions de consommables à un employé
     paramètres: aff_frame = la zone représentant l'interface
     """
+
+    fond_image_path =  "images/image_consommable/pngwing.com (1).png"
+    fond_image = Image.open(fond_image_path)
+    image = ctk.CTkImage(fond_image, size=(993,645))
+    fond = ctk.CTkLabel(aff_frame,text=0,image=image)
+    fond.place(x=0, y=0)
 
     def tableau_dist(cat):
         """

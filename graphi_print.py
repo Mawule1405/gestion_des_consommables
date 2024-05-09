@@ -64,7 +64,7 @@ def get_services(host_x='localhost', user_x='root', password_x='', database_name
     return liste
 
 def get_one_service(id,host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    sql=f"SELECT s.id_serv, nom_serv, description_serv, date_serv, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp AND s.id_serv = {id}"
+    sql=f"SELECT s.id_serv, nom_serv, description_serv, date_serv,id_emp_resp, nom_emp, prenom_emp FROM Service s, Employe e WHERE s.id_emp_resp = e.id_emp AND s.id_serv = {id}"
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -167,19 +167,19 @@ def get_categories(host_x='localhost', user_x='root', password_x='', database_na
     bdd.close()
     return liste
 
-def inserer_categorie(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+def inserer_categorie(nom_categorie, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     sql = """INSERT INTO Categorie
-                 (id_cat,
+                 (
                  nom_cat
              )
              
-             VALUES (%s, %s)"""
+             VALUES (%s)"""
     bdd = None
     curseur = None
     try:
         bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
         curseur = bdd.cursor()
-        curseur.execute(sql, information)
+        curseur.execute(sql, (nom_categorie,))
         bdd.commit()
         return True
     except Exception as e:
@@ -220,27 +220,20 @@ def modifier_categories(information, host_x='localhost', user_x='root', password
 def supprimer_categories(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """Fonction pour supprimer un nom de catégories"""
     
-    sql1 = f"""
-             SELECT id_cat FROM Consommable"""
     
-    sql2 = f"""DELETE FROM Categorie
-             WHERE id_cat = {id} """
+    sql = f"""DELETE FROM Categorie
+             WHERE id_cat = {id} AND 
+             id_cat NOT IN (SELECT id_cat FROM Consommable)"""
     
     bdd = None
     curseur = None
     try:
         bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
         curseur = bdd.cursor()
-        curseur.execute(sql1)
-
-        reponse = curseur.fetchall()
-
-        if id in [ i[0] for i in reponse]:
-            return False
-        else:
-            curseur.execute(sql2)
-            bdd.commit()
-            return True
+        
+        curseur.execute(sql)
+        bdd.commit()
+        return True
         
     except Exception as e:
         print(f"Erreur : {e}")
@@ -299,9 +292,11 @@ def get_consommables_by_id_cons(id_cons,host_x='localhost', user_x='root', passw
 def update_consommable(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     sql = """UPDATE Consommable
             SET  nom_cons = %s,
-                 prix_unitaire_cons = %s
-            WHERE id_cons = %s
-             """
+                 prix_unitaire_cons = %s,
+                 id_cat= %s,
+                 image = %s
+            WHERE id_cons = %s"""
+    
     bdd = None
     curseur = None
     try:
@@ -322,15 +317,16 @@ def update_consommable(information, host_x='localhost', user_x='root', password_
 
 def inserer_consommable(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     sql = """INSERT INTO Consommable
-                 (id_cons,
+                 (
                  nom_cons,
                  qtestock_cons,
                  qteseuil_cons,
                  id_cat, 
-                 prix_unitaire_cons
+                 prix_unitaire_cons,
+                 image
              )
              
-             VALUES (%s, %s, %s, %s, %s, %s)"""
+             VALUES ( %s, %s, %s, %s, %s, %s)"""
     bdd = None
     curseur = None
     try:
@@ -501,6 +497,28 @@ def inserer_one_demande(information, host_x='localhost', user_x='root', password
             bdd.close()
 
 
+
+def supprimer_consommable(idcons, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = f"""DELETE FROM Consommable
+              WHERE id_cons = {idcons} AND 
+              id_cons NOT IN (SELECT d.id_cons FROM Demander d) AND 
+              id_cons NOT IN (SELECT a.id_cons FROM Appartenir a)
+           """
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user= user_x, password = password_x, database = database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql)
+        bdd.commit()
+        return True
+    except:
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
 
 #=========================================================================================================
 #=========================GESTION DES PPROVISIONNEMENT: TABLE APPARTENIR==================================

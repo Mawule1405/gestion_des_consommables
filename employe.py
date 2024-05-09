@@ -104,7 +104,7 @@ def build_employee( frame):
         ee.enregistrement(aff_frame)
 
     def page_service():
-        ser.services(aff_frame)
+        ser.des_services(aff_frame)
     
    
 

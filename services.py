@@ -2,9 +2,11 @@ import customtkinter as ctk
 from tkinter import ttk , messagebox
 import tkinter as tk
 from datetime import datetime
+from PIL import Image
 
 import setting as set
 import graphi_print as gp
+import un_service as unserv
 
 def services(framescrol):
 
@@ -335,3 +337,19 @@ def services(framescrol):
     for ligne in listes_serv:
         tree_serv.insert('', tk.END, values=ligne)
     tree_serv.pack(pady=20)
+
+
+def des_services(framescrol):
+    fond_image_path =  "images/image_consommable/pngwing.com (1).png"
+    fond_image = Image.open(fond_image_path)
+    image = ctk.CTkImage(fond_image, size=(993,645))
+    fond = ctk.CTkLabel(framescrol,text=0,image=image)
+    fond.place(x=0, y=0)
+
+    
+    servframe = ctk.CTkScrollableFrame(framescrol, width=800, height=500, fg_color=set.col_blanc_4, 
+                         border_color=set.col_noir_1, border_width=0,corner_radius=0)
+    servframe.place(x=100, y=30)
+
+    serv = gp.get_services()
+    unserv.build_service(1, servframe)

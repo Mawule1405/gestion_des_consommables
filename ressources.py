@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from PIL import Image
 
 import categories as cat
 import consommables as cons
@@ -32,6 +33,9 @@ def build_home(framescrol):
     aff_frame = ctk.CTkFrame(framescrol, width=993, height= 645, border_color= set.col_border, border_width=1,
                                 fg_color=set.col_blanc_4, corner_radius=0)
     aff_frame.place(x=200, y=0)
+
+    
+
 
     #Les boutons
     categorie = ctk.CTkButton(slide_frame,text='categories de consommables'.upper(),width=190, height=40, fg_color=set.col_noir_1
