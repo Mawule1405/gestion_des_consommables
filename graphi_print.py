@@ -580,9 +580,10 @@ def inserer_commande(information, host_x='localhost', user_x='root', password_x=
     sql = """INSERT INTO Commande
                  (id_com,
                  date_com,
-                 id_emp
+                 id_emp,
+                 id_four
              )
-             VALUES (%s, %s, %s)"""
+             VALUES (%s, %s, %s, %s)"""
     bdd = None
     curseur = None
     try:
@@ -639,14 +640,16 @@ def get_commandes( host_x='localhost', user_x='root', password_x='', database_na
 #==============================================================================================================
 #======================================LES REQUETES POUR LES FONCTIONNALITES===================================
 
-def get_emp_commande_conso( host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+#===========================================================================================
+#====================================GESTION DES FOURNISSEURS===============================
+
+def get_fournisseurs(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """
-        Cette fonction permet récuper la liste des employés ayant effectuée de commandes
+    Fonction de récupération des informations des fournisseurs
+    @param:
+    @return: fournisseur
     """
-    sql=f"""SELECT  e.id_emp , nom_emp,prenom_emp, date_nais_emp, date_embau_emp, lieu_res_emp, email_emp, contact_emp, photo_emp
-            FROM Employe e, Commande c
-            WHERE e.id_emp = c.id_emp 
-            """
+    sql = f"""SELECT * FROM fournisseur """
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -657,16 +660,13 @@ def get_emp_commande_conso( host_x='localhost', user_x='root', password_x='', da
     return liste
 
 
-def get_emp_non_commande_conso( host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+def get_one_fournisseur(idfour, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """
-        Cette fonction permet récuper la liste des employés n'ayant effectuée aucune commandes
+    Fonction de récupération des informations d'un fournisseur à partir de son id
+    @param: idfour
+    @return: fournisseur
     """
-    sql=f"""SELECT  e.id_emp , nom_emp,prenom_emp, date_nais_emp, date_embau_emp, lieu_res_emp, email_emp, contact_emp, photo_emp
-            FROM Employe e
-            WHERE e.id_emp  NOT IN (SELECT id_emp
-                                    FROM commande) 
-            """
-    
+    sql = f"""SELECT * FROM fournisseur WHERE id_four = {idfour} """
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur= bdd.cursor()
     curseur.execute(sql)
@@ -676,232 +676,72 @@ def get_emp_non_commande_conso( host_x='localhost', user_x='root', password_x=''
 
     return liste
     
-   
+
+def supprimer_fournisseur(idfour, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = f"""DELETE FROM fournisseur
+             WHERE id_four = {idfour} AND
+             id_four NOT IN (SELECT id_four FROM commande)"""
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
 
 
-def liste_montant_com_mois(annee, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    
-    """Cette fonction permet de recuperer lister les dépenses effectuées dans tous les mois de l'année
-    parametre: annee
-    return: liste: mois, montant"""
-    
-    sql=f"""SELECT MONTH(date_com) AS mois, SUM(montant_com) AS montant_total
-            FROM Commande
-            WHERE YEAR(date_com) = {annee}
-            GROUP BY MONTH(date_com)
-            ORDER BY mois;
-            """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur= bdd.cursor()
-    curseur.execute(sql)
-    liste= curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-def liste_montant_com_annee(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense annuelle totale de l'entreprise pour chaque année.
-
-    Returns:
-        list: Une liste de tuples contenant chaque année avec le montant total des dépenses pour cette année.
-              Chaque tuple contient deux éléments : l'année et le montant total des dépenses.
-    """
+def update_fournisseur(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = """UPDATE fournisseur
+              SET nom_four = %s,
+                 adresse_four = %s,
+                 contact_four = %s,
+                 photo_four = %s
+            WHERE id_four = %s
+              """
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()
 
 
-    sql = f"""SELECT YEAR(date_com) AS annee, SUM(montant_com) AS montant_total
-              FROM Commande
-              GROUP BY YEAR(date_com)
-              ORDER BY annee
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-def liste_montant_com_mois_annee(annee, mois, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense totale de l'entreprise pour un mois spécifié d'une année donnée.
-
-    Args:
-        annee (int): L'année pour laquelle récupérer les données.
-        mois (int): Le mois pour lequel récupérer les données (de 1 à 12).
-        host_x (str): L'adresse IP ou le nom d'hôte du serveur MySQL. Par défaut, 'localhost'.
-        user_x (str): Le nom d'utilisateur du compte MySQL. Par défaut, 'root'.
-        password_x (str): Le mot de passe du compte MySQL. Par défaut, ''.
-        database_name (str): Le nom de la base de données MySQL. Par défaut, 'graphi_print'.
-
-    Returns:
-        list: Une liste de tuples contenant chaque mois avec le montant total des dépenses pour ce mois.
-              Chaque tuple contient deux éléments : le mois et le montant total des dépenses.
-    """
-
-    sql = f"""SELECT id_com, date_com , nombre_com, montant_com
-              FROM Commande
-              WHERE YEAR(date_com) = {annee} AND MONTH(date_com) = {mois}
-              ORDER BY date_com DESC
-             
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-
-def liste_montant_com_mois_2(mois, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense totale de l'entreprise pour un mois spécifié, toutes les années confondues.
-
-    Args:
-        mois (int): Le mois pour lequel récupérer les données (de 1 à 12).
-        host_x (str): L'adresse IP ou le nom d'hôte du serveur MySQL. Par défaut, 'localhost'.
-        user_x (str): Le nom d'utilisateur du compte MySQL. Par défaut, 'root'.
-        password_x (str): Le mot de passe du compte MySQL. Par défaut, ''.
-        database_name (str): Le nom de la base de données MySQL. Par défaut, 'graphi_print'.
-
-    Returns:
-        list: Une liste de tuples contenant chaque année avec le montant total des dépenses pour ce mois.
-              Chaque tuple contient deux éléments : l'année et le montant total des dépenses.
-    """
-
-    sql = f"""SELECT id_com, date_com, nombre_com, montant_com
-              FROM Commande
-              WHERE MONTH(date_com) = {mois}
-              ORDER BY date_com DES
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-
-
-def liste_des_n_consommables(n, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense totale de l'entreprise pour une année spécifiée.
-
-    Args:
-        annee (int): L'année pour laquelle récupérer les données.
-        host_x (str): L'adresse IP ou le nom d'hôte du serveur MySQL. Par défaut, 'localhost'.
-        user_x (str): Le nom d'utilisateur du compte MySQL. Par défaut, 'root'.
-        password_x (str): Le mot de passe du compte MySQL. Par défaut, ''.
-        database_name (str): Le nom de la base de données MySQL. Par défaut, 'graphi_print'.
-
-    Returns:
-        list: Une liste de tuples contenant chaque mois avec le montant total des dépenses pour ce mois.
-              Chaque tuple contient deux éléments : le mois et le montant total des dépenses.
-    """
-
-    sql = f"""SELECT c.id_cons, c.nom_cons, COUNT(*) AS nombre_commandes
-                FROM commande co
-                INNER JOIN appartenir a ON co.id_com = a.id_com
-                INNER JOIN consommable c ON a.id_cons = c.id_cons
-                GROUP BY c.nom_cons
-                ORDER BY COUNT(*) DESC
-                LIMIT {n}
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-
-
-def liste_des_conso_commande_cat(host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense totale de l'entreprise pour une année spécifiée.
-
-    Args:
-        annee (int): L'année pour laquelle récupérer les données.
-        host_x (str): L'adresse IP ou le nom d'hôte du serveur MySQL. Par défaut, 'localhost'.
-        user_x (str): Le nom d'utilisateur du compte MySQL. Par défaut, 'root'.
-        password_x (str): Le mot de passe du compte MySQL. Par défaut, ''.
-        database_name (str): Le nom de la base de données MySQL. Par défaut, 'graphi_print'.
-
-    Returns:
-        list: Une liste de tuples contenant chaque mois avec le montant total des dépenses pour ce mois.
-              Chaque tuple contient deux éléments : le mois et le montant total des dépenses.
-    """
-
-    sql = f"""SELECT nom_cat, nom_cons, nombre_commandes
-                FROM (
-                    SELECT cat.nom_cat, c.nom_cons, COUNT(*) AS nombre_commandes,
-                        ROW_NUMBER() OVER(PARTITION BY c.id_cat ORDER BY COUNT(*) DESC) AS rn
-                    FROM commande co
-                    INNER JOIN appartenir a ON co.id_com = a.id_com
-                    INNER JOIN consommable c ON a.id_cons = c.id_cons
-                    INNER JOIN categorie cat ON c.id_cat = cat.id_cat
-                    GROUP BY cat.id_cat, c.nom_cons
-                ) AS sub
-                WHERE rn = 1
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
-
-
-def liste_conso_commande_employe(id_emp,host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
-    """
-    Cette fonction permet de récupérer la dépense totale de l'entreprise pour une année spécifiée.
-
-    Args:
-        annee (int): L'année pour laquelle récupérer les données.
-        host_x (str): L'adresse IP ou le nom d'hôte du serveur MySQL. Par défaut, 'localhost'.
-        user_x (str): Le nom d'utilisateur du compte MySQL. Par défaut, 'root'.
-        password_x (str): Le mot de passe du compte MySQL. Par défaut, ''.
-        database_name (str): Le nom de la base de données MySQL. Par défaut, 'graphi_print'.
-
-    Returns:
-        list: Une liste de tuples contenant les consommables commandés par un employe
-              Chaque tuple contient deux éléments : nom consommable, date commande, prix unitaire ,quantite commande.
-    """
-
-    sql = f"""SELECT c.nom_cons,co.date_com, c.prix_unitaire_cons, c.qtestock_cons
-                FROM commande co
-                INNER JOIN appartenir a ON co.id_com = a.id_com
-                INNER JOIN consommable c ON a.id_cons = c.id_cons
-                WHERE co.id_emp ={id_emp}
-
-           """
-    
-    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-    curseur = bdd.cursor()
-    curseur.execute(sql)
-    liste = curseur.fetchall()
-    curseur.close()
-    bdd.close()
-
-    return liste
+def inserer_fournisseur(information, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    sql = """INSERT INTO fournisseur (nom_four, adresse_four, contact_four, photo_four)
+                VALUES (%s, %s, %s, %s)
+        """
+    bdd = None
+    curseur = None
+    try:
+        bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+        curseur = bdd.cursor()
+        curseur.execute(sql, information)
+        bdd.commit()
+        return True
+    except Exception as e:
+        print(f"Erreur : {e}")
+        return False
+    finally:
+        if curseur:
+            curseur.close()
+        if bdd:
+            bdd.close()

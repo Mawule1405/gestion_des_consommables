@@ -88,22 +88,6 @@ onglet4 = ctk.CTkButton(bar_menu,text = "Statistiques", font= ('Montsérrat', 15
 onglet4.place(x=450, y=2)
 
 
-#onglet 5
-onglet5 = ctk.CTkButton(bar_menu,text = "Distributions", font= ('Montsérrat', 15),width=150, height=35,
-                        fg_color=set.col_noir_1, corner_radius=0,
-                        command=lambda: switch(indicator_lb=onglet5_lb, page = page_d_aide))
-#onglet5.place(x=600, y=2)
-onglet5_lb = ctk.CTkLabel(bar_menu,text='', width=150,height=1)
-#onglet5_lb.place(x=600, y=28)
-
-#onglet 6
-onglet6_lb = ctk.CTkLabel(bar_menu,text='', width=150,height=1)
-onglet6_lb.place(x=600, y=28)
-onglet6 = ctk.CTkButton(bar_menu,text = "Aides", font= ('Montsérrat', 15),width=150, height=35,
-                        fg_color=set.col_noir_1, corner_radius=0,
-                        command=lambda: switch(indicator_lb=onglet6_lb, page = page_d_aide))
-onglet6.place(x=600, y=2)
-
 
 #Définition de la zone de widgets
 zone = ctk.CTkFrame(root, width=1190, height=645, fg_color=set.col_blanc_4)
@@ -128,11 +112,6 @@ def page_ressources():
     res.build_home(home)
     
 
-
-#Définition de la page de gestion d'aide: utilisation de l'application
-def page_d_aide():
-    for i in range(9):
-        print(i)
 
 #Définition de la page de gestion des employés
 def page_employe():

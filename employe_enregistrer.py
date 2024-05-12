@@ -73,7 +73,7 @@ def enregistrement(frame):
         #verification du nom
         if nom_e !='':
             nom_is_val= True
-            nom.configure(border_color = '#fff')
+            nom.configure(border_color = '#000')
         else:
             nom_is_val= False
             nom.configure(border_color = 'red')
@@ -81,7 +81,7 @@ def enregistrement(frame):
         #verification du prenom
         if prenom_e !='':
             prenom_is_val= True
-            prenom.configure(border_color = '#fff')
+            prenom.configure(border_color = '#000')
         else:
             prenom_is_val= False
             prenom.configure(border_color = 'red')
@@ -90,7 +90,7 @@ def enregistrement(frame):
         try:
             date_nais_is_val= True
             date_nais_e = datetime.strptime(date_nais_e, '%Y-%m-%d').date()
-            date_nais.configure(border_color = '#fff')
+            date_nais.configure(border_color = '#000')
         except:
             date_nais_is_val= False
             date_nais.configure(border_color = 'red')
@@ -99,7 +99,7 @@ def enregistrement(frame):
         try:
             date_emb_is_val = True
             date_emb_e = datetime.strptime(date_emb_e, '%Y-%m-%d').date()
-            date_emb.configure(border_color = '#fff')
+            date_emb.configure(border_color = '#000')
         except:
             date_emb_is_val = False
             date_emb.configure(border_color = 'red')
@@ -107,7 +107,7 @@ def enregistrement(frame):
         #Verification de la nationalite
         if nationalite_e !='':
             nationalite_is_val= True
-            nationalite.configure(border_color = '#fff')
+            nationalite.configure(border_color = '#000')
         else:
             nationalite_is_val= False
             nationalite.configure(border_color = 'red')
@@ -115,7 +115,7 @@ def enregistrement(frame):
         #Verification de la niveau
         if niveau_e !='':
             niveau_is_val= True
-            niveau.configure(border_color = '#fff')
+            niveau.configure(border_color = '#000')
         else:
             niveau_is_val= False
             niveau.configure(border_color = 'red')
@@ -123,7 +123,7 @@ def enregistrement(frame):
         #Verification de la residence
         if residence_e !='':
             residence_is_val= True
-            residence.configure(border_color = '#fff')
+            residence.configure(border_color = '#000')
         else:
             residence_is_val= False
             residence.configure(border_color = 'red')
@@ -132,7 +132,7 @@ def enregistrement(frame):
         regex = r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
         if re.search(regex, email_e):
             email_is_val= True
-            email.configure(border_color = '#fff')
+            email.configure(border_color = '#000')
         else:
             email_is_val= False
             email.configure(border_color = 'red')
@@ -142,7 +142,7 @@ def enregistrement(frame):
 
         if re.search(regrex1, telephone_e):
             telephone_is_val= True
-            telephone.configure(border_color = '#fff')
+            telephone.configure(border_color = '#000')
         else:
             telephone_is_val= False
             telephone.configure(border_color = 'red')
@@ -154,7 +154,7 @@ def enregistrement(frame):
         if re.search(regrex2, salaire_e):
             salaire_e = int(salaire_e)
             salaire_is_val= True
-            salaire.configure(border_color = '#fff')
+            salaire.configure(border_color = '#000')
         else:
             salaire_is_val= False
             salaire.configure(border_color = 'red')
@@ -162,7 +162,7 @@ def enregistrement(frame):
         #Verification de la sexe
         if sexe_e !='':
             sexe_is_val= True
-            sexe.configure(border_color = '#fff')
+            sexe.configure(border_color = '#000')
         else:
             sexe_is_val= False
             sexe.configure(border_color = 'red')
@@ -171,7 +171,7 @@ def enregistrement(frame):
         try:
             service_is_val= True
             service_e = int(service_e)
-            service.configure(border_color = '#fff')
+            service.configure(border_color = '#000')
         except:
             service_is_val= False
             service.configure(border_color = 'red')

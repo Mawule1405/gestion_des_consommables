@@ -2,6 +2,7 @@ import customtkinter as ctk
 import math as mt
 from datetime import datetime
 from PIL import Image
+import tkinter as tk
 
 import setting as set
 
@@ -74,24 +75,61 @@ def update_time(canvas, hour_hand, minute_hand, second_hand):
 
 def build_accueil(frame):
     # Créer un canevas pour dessiner la montre
-    titre = ctk.CTkFrame(frame, width = 800, height=10)
-    titre.place(x=100,y=0)
-    image_path = "images/images_app/papeterie.png"
+    
+    image_path = "images/image_consommable/pngwing.com (1).png"
     image = Image.open(image_path)
-    image_final = ctk.CTkImage(image, size=(1000, 600))
-    photo = ctk.CTkLabel(frame, image=image_final)
-    photo.place(x=50, y=100)
+    image_final = ctk.CTkImage(image, size=(1200, 900))
+    photo = ctk.CTkLabel(frame,text="", image=image_final)
+    photo.place(x=0, y=0)
 
-   
-    """canvas = ctk.CTkCanvas(frame, width=300, height=300,
-                             )
-    canvas.place(x=600, y= 10)"""
-    build_scroll_text(titre,"GRAPHIPRINT")
+    titre = ctk.CTkFrame(frame, width = 800, height=10)
+    titre.place(x=75,y=0)
+    build_scroll_text(titre," GRAPHIPRINT : Votre partenaire d'impression ! ")
     #draw_watch(canvas)
     
+    liste_photo = ["images/images_app/accueil1.png", 
+                   "images/images_app/accueil2.png", 
+                   "images/images_app/accueil3.png", 
+                   "images/images_app/accueil4.png", 
+                   "images/images_app/accueil5.png"]
+    
+    photo_frame = ctk.CTkFrame(frame, width = 1100, height=300, corner_radius=0)
+    photo_frame.place(x=50, y = 120)
+
+    fond = ctk.CTkImage(Image.open( "images/image_consommable/pngwing.com (1).png"), size=(1100,300))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=0, y=0)
 
     
+        
+    fond = ctk.CTkImage(Image.open(liste_photo[0] ), size=(200,250))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=10, y=25)
+
+    fond = ctk.CTkImage(Image.open(liste_photo[1] ), size=(200,250))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=228, y=25)
+
+    fond = ctk.CTkImage(Image.open(liste_photo[2] ), size=(200,250))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=446, y=25)
+
+    fond = ctk.CTkImage(Image.open(liste_photo[3] ), size=(200,250))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=664, y=25)
+
+    fond = ctk.CTkImage(Image.open(liste_photo[4] ), size=(200,250))
+    ctk.CTkLabel(photo_frame, text="", image=fond).place(x=882, y=25)
     
+    
+    fond = ctk.CTkImage(Image.open("images/images_app/telephone1.png" ), size=(50,50))
+    ctk.CTkLabel(frame, text="", image=fond).place(x=30, y=460)
+    ctk.CTkLabel(frame, text="+228 93 49 76 06", font= ("Montsérrat", 30, "bold")).place(x= 100, y= 450)
+    ctk.CTkLabel(frame, text="+241 74 63 04 73", font= ("Montsérrat", 30, "bold")).place(x= 100, y= 500)
+
+    fond = ctk.CTkImage(Image.open("images/images_app/email1.png"), size=(50,50))
+    ctk.CTkLabel(frame, text="", image=fond).place(x=30, y=540)
+    ctk.CTkLabel(frame, text="graphiprint@gmail.com", font= ("Montsérrat", 30, "bold")).place(x= 100, y= 540)
+
+    fond = ctk.CTkImage(Image.open("images/images_app/siteweb1.png"), size=(50,50))
+    ctk.CTkLabel(frame, text="", image=fond).place(x=30, y=595)
+    ctk.CTkLabel(frame, text="www.graphiprint.tg", font= ("Montsérrat", 30, "bold")).place(x= 100, y= 600)
+   
 
 
     

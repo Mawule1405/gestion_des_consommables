@@ -600,7 +600,7 @@ def consommables(conso, formulaire):
     id = ctk.CTkLabel(formulaire, text='Consommable N°: ', font= ("Montsérrat",20), text_color=set.col_noir_1,fg_color= set.col_blanc_4)
     id.place(x=250, y=5)
     id_e = ctk.CTkEntry(formulaire, placeholder_text="0",text_color=set.col_noir_1,  fg_color= set.col_blanc_4,
-                        placeholder_text_color=set.col_placeholder, justify = 'right', width=250, height=20, corner_radius=5,
+                        placeholder_text_color=set.col_placeholder, justify = 'right', width=250, height=30, corner_radius=5,
                         font= ("Montsérrat",15))
     id_e.place(x=450, y= 5)
     id_e.insert(0, conso[0])
@@ -745,7 +745,7 @@ def build_consommable(idconsommable,framescroll):
     
     fond_image_path =  "images/image_consommable/pngwing.com (1).png"
     fond_image = Image.open(fond_image_path)
-    image = ctk.CTkImage(fond_image, size=(600,300))
+    image = ctk.CTkImage(fond_image, size=(800,300))
 
     fond = ctk.CTkLabel(cons_frame,text=0,image=image)
     fond.place(x=0, y=0)

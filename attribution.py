@@ -66,19 +66,23 @@ def apercu_des_consommables_selectionner(frame, employe_entry):
     id_emp = employe.split()[0]
     try:
         id_emp = int(id_emp)
-        nom_prenom_emp = " ".join(employe[1:])
+       
 
 
         #construction d'un toplevel
         apercu_fen = ctk.CTkToplevel()
-        apercu_fen.geometry("600x650+0+0")
-        apercu_fen.title(f"Liste des consommables à fournir à l'employé {nom_prenom_emp}")
+        apercu_fen.geometry("600x650")
+        apercu_fen.title("Liste des consommables à fournir à l'employé")
         apercu_fen.resizable(width=False, height=False)
-        apercu_fen.configure(fg_color= set.col_white)
         apercu_fen.attributes('-topmost', True)
+        
+        image = Image.open("images/image_consommable/pngwing.com (1).png")
+        imagectk = ctk.CTkImage(image, size = (600,650))
+        label_fond = ctk.CTkLabel(apercu_fen, text='', image=imagectk)
+        label_fond.place(x=0, y=0)
 
         #titre
-        titre = ctk.CTkLabel(apercu_fen, text= f'LISTE DES CONSOMMABLES DE: {nom_prenom_emp}', text_color= set.col_text)
+        titre = ctk.CTkLabel(apercu_fen, text= f'LISTE DES CONSOMMABLES A FOURNIs', text_color= set.col_text)
         titre.place(x=40,y=5)
         #zone tableau
         tableau_consommables = ctk.CTkScrollableFrame(apercu_fen, width=500, height=530,fg_color= set.col_white,
@@ -94,16 +98,16 @@ def apercu_des_consommables_selectionner(frame, employe_entry):
                 qte_demander = int(ligne[3].get())
                 if qte_demander and qte_demander < int(ligne[2].get()):
                     les_conso_selectionnees.append((int(id),ligne[1].get(),qte_demander))
-                    ligne[3].configure(border_color= set.col_border, state= tk.NORMAL)
+                    ligne[3].configure(border_color= set.col_noir_1, state= tk.NORMAL)
                 else:
-                    ligne[3].configure(border_color= set.col_rouge, state = "disable")
+                    ligne[3].configure(border_color= "red", state = "disable")
                     ligne[4]._variable.set(0)
                 
             except:
                 
                 ligne[3].delete(0, tk.END)
                 ligne[3].insert(0,0)
-                ligne[3].configure(border_color= set.col_rouge, state = "disable")
+                ligne[3].configure(border_color= "red", state = "disable")
                 ligne[4]._variable.set(0)
         
         #Construction du tableau d'affichage
@@ -139,7 +143,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry):
 
     except:
 
-        messagebox.showinfo("Information importante", "Veuillez sélectionner l'employé à qui est destineé les pproduits sélectionnés")
+        messagebox.showinfo("Information importante", "Veuillez sélectionner l'employé à qui est destineé les produits sélectionnés")
 
 
 

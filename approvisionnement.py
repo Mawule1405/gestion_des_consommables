@@ -21,14 +21,14 @@ def update_fenetre(frame):
 
 
 
-def enregistrer_la_selectionne(frame, toplevel,id_employe,date_commande, les_produits_selectionnes):
+def enregistrer_la_selectionne(frame, toplevel,id_employe,id_fournisseur, date_commande, les_produits_selectionnes):
     """
     Procédure permettant d'en régistre les consommables sélectionner dans la table demander
     paramètres: id_employe : identifiant de l'employé qui à demander les consommables
                 date_commande: date à laquelle la commande a été effectué
                 les_produits_selectionnes: la liste des produits commandés: id_cons, qte_com
     """
-    confirme = messagebox.askquestion("Confirmation de l'enrégistrement", "Etes vous sur d'enrégistrer les données qui vous aient été présenté.\n Une fois enrégistrer vous n'aurez plus le droit de les supprimées.\n Au besoins veillez vous contacter votre administrateur.")
+    confirme = messagebox.askquestion("Confirmation de l'enrégistrement", "Etes vous sur d'enrégistrer les données qui vous aient été présenté.\nUne fois enrégistrer vous n'aurez plus le droit de les supprimées.\n Au besoins veillez vous contacter votre administrateur.")
     les_demandes = []
     
     
@@ -36,7 +36,8 @@ def enregistrer_la_selectionne(frame, toplevel,id_employe,date_commande, les_pro
         #insertion de la commande
         id_com = gp.get_last_commande_id()
         id_com+=1
-        reponse_insertion_commande = gp.inserer_commande((id_com, date_commande, id_employe))
+        reponse_insertion_commande = gp.inserer_commande((id_com, date_commande, id_employe, id_fournisseur))
+        
         if reponse_insertion_commande:
 
             for consommable in les_produits_selectionnes:
@@ -72,52 +73,71 @@ def recuperation_des_champs_selectionner():
 
 
 
-def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
+def apercu_des_consommables_selectionner(frame, employe_entry, fournisseur_entry, date_entry):
     """Une procéduire qui permet voir la liste des lignes selectionner
     
     """
     
     consommables = recuperation_des_champs_selectionner()
-    employe = employe_entry.get()
+    employe = employe_entry.get() ; employe_val = False
+    fournisseur = fournisseur_entry.get() 
     date_commande = date_entry.get() ; date_is_val = False
     id_emp = employe.split()[0] ; id_is_val = False
+    id_four = fournisseur.split()[0] ; id_four_val = False
+    
     
 
     #verification de l'id de l'employé qui a effectué la commande
     try:
         id_emp = int(id_emp)
         id_is_val = True
+        employe_entry.configure(border_color = set.col_noir_1)
     except:
         id_is_val = False
+        employe_entry.configure(border_color = "red")
     
+    #vérification de l'id du fournisseur
+    try:
+        id_four = int(id_four)
+        id_four_val = True
+        fournisseur_entry.configure(border_color = set.col_noir_1)
+    except:
+        id_four_val = False
+        fournisseur_entry.configure(border_color = "red")
+
     #verification de la date ou la commande a été effectué
     try:
         date_commande = datetime.strptime(date_commande,"%Y-%m-%d").date()
         date_is_val = True
+        date_entry.configure(border_color = set.col_noir_1)
     except:
         date_is_val = False
+        date_entry.configure(border_color = 'red')
        
-    if id_is_val and not date_is_val:
-        messagebox.showinfo("Information importante", "Veuillez préciser la date où la commande a été effectué")
-    elif not id_is_val and date_is_val:
-        messagebox.showinfo("Information importante", "Veuillez préciser l'employé à qui a effectuée la commande")
-    elif not id_is_val and not date_is_val:
-        messagebox.showinfo("Information importante", "Veuillez préciser l'employé à qui a effectuée la commande \net la date où la commande a été effectué")
-    else:
+    validation = all([id_is_val, id_four_val, date_is_val])
+
+    if validation:
         
         nom_prenom_emp = " ".join(employe[1:])
+        nom_fourn =" ".join(fournisseur[1:])
 
 
         #construction d'un toplevel
         apercu_fen = ctk.CTkToplevel()
-        apercu_fen.geometry("600x650+0+0")
-        apercu_fen.title(f"Liste des consommables à fournir à l'employé {nom_prenom_emp}")
+        apercu_fen.geometry("600x650")
+        apercu_fen.title(f"Liste des consommables commandé par l'employé {nom_prenom_emp}")
         apercu_fen.resizable(width=False, height=False)
         apercu_fen.configure(fg_color= set.col_blanc_4)
         apercu_fen.attributes('-topmost', True)
 
+        image = Image.open("images/image_consommable/pngwing.com (1).png")
+        imagectk = ctk.CTkImage(image, size = (600,650))
+        label_fond = ctk.CTkLabel(apercu_fen, text='', image=imagectk)
+        label_fond.place(x=0, y=0)
+
+
         #titre
-        titre = ctk.CTkLabel(apercu_fen, text= f'LISTE DES CONSOMMABLES DE: {nom_prenom_emp}', text_color= set.col_noir_1)
+        titre = ctk.CTkLabel(apercu_fen, text= f'LISTE DES CONSOMMABLES COMMANDES', text_color= set.col_noir_1)
         titre.place(x=40,y=5)
         #zone tableau
         tableau_consommables = ctk.CTkScrollableFrame(apercu_fen, width=500, height=530,fg_color= set.col_blanc_4,
@@ -134,10 +154,10 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
                 if qte_demander > 0:
                     les_conso_selectionnees.append((int(id),ligne[1].get(),qte_demander))
                    
-                    ligne[2].configure(border_color= set.col_noir_4, state= tk.NORMAL)
+                    ligne[2].configure(border_color= set.col_noir_1, state= tk.NORMAL)
                     
                 else:
-                    ligne[2].configure(border_color= set.col_rouge, state = "disable")
+                    ligne[2].configure(border_color= "red", state = "disable")
                     ligne[3]._variable.set(0)
                   
                 
@@ -145,7 +165,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
                 
                 ligne[2].delete(0, tk.END)
                 ligne[2].insert(0,0)
-                ligne[2].configure(border_color= set.col_rouge, state = "disable")
+                ligne[2].configure(border_color= "red", state = "disable")
                 ligne[3]._variable.set(0)
         
         #Construction du tableau d'affichage
@@ -174,10 +194,12 @@ def apercu_des_consommables_selectionner(frame, employe_entry, date_entry):
         #bouton confirmer
         confirmation_btn = ctk.CTkButton(apercu_fen, text= 'Enrégistrer', width=110,height=30,font=("Montsérrat",14), border_color=set.col_noir_1,
                                 border_width=1, hover_color= set.col_hover, corner_radius=5,fg_color=set.col_noir_5,
-                                  command= lambda :enregistrer_la_selectionne(frame,apercu_fen,id_emp,date_commande, les_conso_selectionnees))
+                                  command= lambda :enregistrer_la_selectionne(frame,apercu_fen,id_emp, id_four,date_commande, les_conso_selectionnees))
         confirmation_btn.place(x=40,y=600)
 
         apercu_fen.mainloop()
+    else :
+        messagebox.showinfo("Aperçu des consommables commandés", "Données invalide, veuillez corriger les champs marquées rouges")
 
    
     
@@ -355,7 +377,7 @@ def approvisionner(aff_frame):
 
 
     #employé
-    information_frame = ctk.CTkFrame(formulaire , height=50, fg_color= set.col_blanc_4)
+    information_frame = ctk.CTkFrame(formulaire , height=75, fg_color= set.col_blanc_4)
     information_frame.pack(fill = "both", padx =15, pady = 15)
     les_employes = gp.get_employes()
     options = ["Choisir un employé"]
@@ -367,6 +389,18 @@ def approvisionner(aff_frame):
     employe_c = ctk.CTkComboBox(information_frame,width=300,height=30, values= options, text_color=set.col_noir_1, 
                                 font= ("Montsérrat", 15), border_width=1)
     employe_c.place(x=10, y=5)
+
+    #le fournisseur
+    les_fournisseurs = gp.get_fournisseurs()
+    choix_fourn = ["Choisir un fournisseur"]
+    for fournisseur in les_fournisseurs:
+        
+       choix_fourn.append(" ".join([str(fournisseur[0]), fournisseur[1]]))
+
+
+    fournisseur_c = ctk.CTkComboBox(information_frame,width=300,height=30, values= choix_fourn, text_color=set.col_noir_1, 
+                                font= ("Montsérrat", 15), border_width=1)
+    fournisseur_c.place(x=10, y=40)
 
     #Les numeros de la commandes
     
@@ -387,16 +421,16 @@ def approvisionner(aff_frame):
     #btn ajouter et supprimer consommable a enregistrer dans  le compte de employé
     apercu_des_choix = ctk.CTkButton(aff_frame, text = "Voir tous les choix".upper(),width=30,height=40, fg_color=set.col_noir_5,
                                      corner_radius=5, hover_color= set.col_hover,font=('Montsérrat', 10),
-                                     command= lambda: apercu_des_consommables_selectionner(aff_frame,employe_c,date_de_la_commande) )
+                                     command= lambda: apercu_des_consommables_selectionner(aff_frame,employe_c,fournisseur_c,date_de_la_commande) )
     apercu_des_choix.place(x=750, y= 580)
 
 
     #Affiches tous les catégories
     cat_frame = ctk.CTkFrame(formulaire, fg_color= set.col_blanc_4)
-    cat_frame.pack(fill = "both", padx =10, pady = 15)
+    cat_frame.pack(fill = "both", padx =10, pady = 10)
    
     #Entete du tableau 
-    entete_tableau = ctk.CTkFrame(cat_frame,fg_color= set.col_blanc_4,height=30)
+    entete_tableau = ctk.CTkFrame(cat_frame,fg_color= set.col_blanc_1,height=30)
     entete_tableau.pack(fill = "both", padx =10, pady = 0)
 
     id = ctk.CTkLabel(entete_tableau,text="ID", text_color=set.col_noir_1, font=('Montsérrat', 15))

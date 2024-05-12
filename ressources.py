@@ -7,6 +7,7 @@ import services as serv
 import setting as set
 import attribution as attr
 import approvisionnement as app
+import fournisseurs as fr
 
 def build_home(framescrol):
     
@@ -71,6 +72,13 @@ def build_home(framescrol):
     approvisionner_l = ctk.CTkLabel(slide_frame,text="", width=15,height=40)
     approvisionner_l.place(x=192,y=126)
 
+    fournisseur = ctk.CTkButton(slide_frame,text="Gestion des\nfournisseurs".upper(), width=190, height=40, fg_color=set.col_noir_1,
+                                   corner_radius=0, hover_color=set.col_hover,
+                           font= ('Montsérrat',11),  command= lambda : switch(fournisseur_l,aff_frame, page_fournisseur))
+    fournisseur.place(x=2,y=168)
+    fournisseur_l = ctk.CTkLabel(slide_frame,text="", width=15,height=40)
+    fournisseur_l.place(x=192,y=168)
+
 
     #Les fonctions
     def page_categories():
@@ -86,7 +94,8 @@ def build_home(framescrol):
     def page_approvisionnement():
         app.approvisionner(aff_frame)
         
- 
+    def page_fournisseur():
+        fr.des_fournisseurs(aff_frame)
 
 
 
