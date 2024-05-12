@@ -181,7 +181,7 @@ def employe_le_plus_ancien_par_service():
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,595))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
-    ctk.CTkLabel(toplevel, text = f"Employé le mieux payé dans chaque service de l'entreprise", font=('Montsérrat', 15, 'bold'),
+    ctk.CTkLabel(toplevel, text = f"Employé le plus ancien dans chaque service de l'entreprise", font=('Montsérrat', 15, 'bold'),
                   bg_color="transparent").place(x=50  , y=5)
     
     liste_frame = ctk.CTkScrollableFrame(toplevel, width=580, height=400,fg_color=set.col_blanc_1)

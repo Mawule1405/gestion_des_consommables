@@ -48,7 +48,7 @@ def employe_le_mieux_paye(host_x='localhost', user_x='root', password_x='', data
 
     sql = """SELECT nom_emp, prenom_emp, salaire_emp, niveau_etu_emp, photo_emp, nom_serv
         FROM employe, service
-        WHERE salaire_emp = (SELECT MAX(salaire_emp) FROM employe) AND employe.id_emp = service.id_emp_resp
+        WHERE salaire_emp = (SELECT MAX(salaire_emp) FROM employe) AND employe.id_serv = service.id_serv
         """
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur = bdd.cursor()
@@ -66,7 +66,7 @@ def employe_le_mieux_paye_par_service(host_x='localhost', user_x='root', passwor
 
     sql = """SELECT e.nom_emp, e.prenom_emp, e.salaire_emp, e.niveau_etu_emp, e.photo_emp, s.nom_serv
              FROM employe e , service s
-             WHERE e.id_emp = s.id_emp_resp
+             WHERE e.id_serv = s.id_serv
              AND e.salaire_emp = (
                  SELECT MAX(salaire_emp)
                  FROM employe ee
@@ -88,12 +88,12 @@ def employe_le_plus_ancien(host_x='localhost', user_x='root', password_x='', dat
     Fonction de récupération des les plus anciens de l'entreprise
     """
 
-    sql = """SELECT e.nom_emp, e.prenom_emp, e.salaire_emp, e.niveau_etu_emp, e.photo_emp, s.nom_serv,  YEAR(CURRENT_DATE()) - YEAR(e.date_embau_emp) AS anciennete
-            FROM employe e, service s
-            WHERE e.id_emp = s.id_emp_resp AND e.date_embau_emp = (
-                SELECT MIN(date_embau_emp)
-                FROM employe
-            )""" 
+    sql = """SELECT nom_emp, prenom_emp, salaire_emp, niveau_etu_emp, photo_emp, nom_serv, YEAR(CURRENT_DATE()) - YEAR(date_embau_emp) AS anciennete
+                FROM employe , service
+                WHERE employe.id_serv = service.id_serv AND date_embau_emp = (
+                    SELECT MIN(date_embau_emp)
+                    FROM employe
+                )""" 
     
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur = bdd.cursor()
@@ -114,7 +114,7 @@ def employe_le_plus_ancien_par_service(host_x='localhost', user_x='root', passwo
     sql = """SELECT e.nom_emp, e.prenom_emp, e.salaire_emp, e.niveau_etu_emp, e.photo_emp, s.nom_serv,
         YEAR(CURRENT_DATE()) - YEAR(e.date_embau_emp) AS anciennete
         FROM employe e
-        JOIN service s ON e.id_emp = s.id_emp_resp
+        JOIN service s ON e.id_serv = s.id_serv
         WHERE e.date_embau_emp = (
             SELECT MIN(date_embau_emp)
             FROM employe ee
@@ -186,12 +186,14 @@ def nombre_employe_par_service(host_x='localhost', user_x='root', password_x='',
     Fonction de récupération du nombre d'employés par service de l'entreprise
     """
 
-    sql = """SELECT s.nom_serv, COUNT(*) AS nombre_employes, e.nom_emp AS nom_responsable, e.prenom_emp AS prenom_responsable
-            FROM service s
-            JOIN employe e ON s.id_emp_resp = e.id_emp
-            JOIN employe ee ON s.id_serv = ee.id_serv
-            GROUP BY s.nom_serv, e.nom_emp, e.prenom_emp
-             """
+    sql = """SELECT s.nom_serv, COUNT(ee.id_emp) AS nombre_employes, 
+       COALESCE(e.nom_emp, 'Aucun') AS nom_responsable, 
+       COALESCE(e.prenom_emp, 'Aucun') AS prenom_responsable
+        FROM service s
+        LEFT JOIN employe e ON s.id_emp_resp = e.id_emp
+        LEFT JOIN employe ee ON s.id_serv = ee.id_serv
+        GROUP BY s.nom_serv, e.nom_emp, e.prenom_emp
+         """
 
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur = bdd.cursor()

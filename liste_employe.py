@@ -92,5 +92,5 @@ def presenter_employer(employees, framescroll):
 
             #Bouton detail
             detail = ctk.CTkButton(frame_emp, text="Exporter",width=150, height=30, fg_color = set.col_noir_5,
-                                hover_color='blue', font=('Montsérrat', 20),command= lambda: ex.export_employe_information([]) )
+                                hover_color='blue', font=('Montsérrat', 20),command= lambda: ex.export_employe_information(el) )
             detail.place(x=575,y=10)

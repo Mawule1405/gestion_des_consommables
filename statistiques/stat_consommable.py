@@ -41,7 +41,7 @@ def liste_conso_utilise():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=500, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=500, y=10)
     
 
     
@@ -79,7 +79,7 @@ def liste_conso_non_utilise():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=500, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=500, y=10)
     
 
     
@@ -118,8 +118,8 @@ def liste_conso_epuise():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=410, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=510, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="red").place(x=410, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -158,7 +158,7 @@ def liste_conso_plus_utilise_par_categorie():
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
         ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=280, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=510, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -197,7 +197,7 @@ def liste_conso_plus_chere_par_categorie():
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
         ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=280, y=10)
-        ctk.CTkLabel(conso_frame, text= str(conso[3])+' FCFA', font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=410, y=10)
+        ctk.CTkLabel(conso_frame, text= str(conso[3])+' FCFA', font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=410, y=10)
 
     
     toplevel.mainloop()
@@ -237,7 +237,7 @@ def liste_conso_utilise_par_annee():
             ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
             ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
             ctk.CTkLabel(conso_frame, text= annee, font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=450, y=10)
-            ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=510, y=10)
+            ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -279,7 +279,7 @@ def liste_conso_utilise_par_mois():
                 ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
                 ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
                 ctk.CTkLabel(conso_frame, text=mois+' '+str(annee), font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=350, y=10)
-                ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=510, y=10)
+                ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -325,7 +325,7 @@ def liste_montant_conso_utilise_par_mois():
 
                 ctk.CTkLabel(conso_frame, text= numero_ordre, font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
                 ctk.CTkLabel(conso_frame, text=mois+' '+str(annee), font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=150, y=10)
-                ctk.CTkLabel(conso_frame, text= str(conso[0])+' FCFA', font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=300, y=10)
+                ctk.CTkLabel(conso_frame, text= str(conso[0])+' FCFA', font = ("Montsérrat", 15, "bold"), text_color="red").place(x=300, y=10)
 
 
     toplevel.mainloop()
@@ -373,6 +373,8 @@ def liste_conso_commande_par_mois():
 
 
     toplevel.mainloop()
+
+
 
 
 
@@ -452,31 +454,13 @@ def liste_conso_plus_commande_par_categorie():
         conso_frame = ctk.CTkFrame(aff_liste_frame,height=50, fg_color= set.col_blanc_4)
         conso_frame.pack(fill = "both",padx=0, pady=0)
 
-        ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 13, "bold"), corner_radius=0).place(x=40, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 13, "bold"), corner_radius=0).place(x=400, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=510, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"),).place(x=10, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 12, "bold"),).place(x=40, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 12, "bold"),text_color="bleu").place(x=400, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"),text_color="red").place(x=510, y=10)
 
     
     toplevel.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -495,7 +479,6 @@ def liste_des_commandes_effectifs():
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
     
-
     ctk.CTkLabel(toplevel, text= "Liste des commandes effectuées",font = ("Montsérrat", 15, "bold")).place(x=30, y=5)
 
     #entete de la liste
@@ -518,7 +501,7 @@ def liste_des_commandes_effectifs():
         ctk.CTkLabel(com_frame, text= com[4], font = ("Montsérrat", 11, "bold"), corner_radius=0).place(x=50, y=10)
         ctk.CTkLabel(com_frame, text=com[1]+" "+com[2], font = ("Montsérrat", 11, "bold"), corner_radius=0).place(x=130, y=10)
         ctk.CTkLabel(com_frame, text=com[3], font = ("Montsérrat", 11, "bold"), corner_radius=0).place(x=330, y=10)
-        ctk.CTkLabel(com_frame, text= str(com[5])+' FCFA', font = ("Montsérrat", 11, "bold"), corner_radius=0).place(x=480, y=10)
+        ctk.CTkLabel(com_frame, text= str(com[5])+' FCFA', font = ("Montsérrat", 11, "bold"),text_color="red").place(x=480, y=10)
 
 
     toplevel.mainloop()

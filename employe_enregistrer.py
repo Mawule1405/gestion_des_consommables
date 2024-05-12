@@ -3,12 +3,29 @@ import tkinter as tk
 from tkinter import messagebox 
 from PIL import Image, ImageTk
 from datetime import datetime
-import re 
+import re , shutil
 
 import graphi_print as gp
 import setting as set
 
 image_path = ""
+
+
+
+def deplacer_fichier(source, destination):
+    """
+    Procédure permettant de copier un fichier d'un dossier source vers un dossier destination
+    @param: source (file), destination (direction)
+    @return : None
+    """
+    try:
+        shutil.copy(source, destination)
+        
+    except PermissionError:
+        messagebox.showerror("Alerte", "Permission non accordée")
+    
+
+
 
 def enregistrement(frame):
 
@@ -33,15 +50,32 @@ def enregistrement(frame):
         types_de_photos=[("Images JPG","*.jpg"),("Images JPEG","*.jpeg"),("Images PNG","*.png"),]
         chemin_de_photos = ctk.filedialog.askopenfilename(title="Choisissez une photo", filetypes=types_de_photos)
         try:
-                image_path = chemin_de_photos
-                photo_emp.delete(0,tk.END)
-                photo_emp.insert(0,image_path)
-                image_pil = Image.open(image_path)
-                image_ctk = ctk.CTkImage(image_pil, size=(150, 150))
-                label_photo = ctk.CTkLabel(master=frame_c,text='', image=image_ctk)
-                label_photo.place(x=10, y=20)
-                app.destroy()
+            nom_image = chemin_de_photos.split('/')[-1]
+            destination = "C://wamp64/www/DEV/image/photo_employe"
+            deplacer_fichier(chemin_de_photos, destination)
+            chemin_de_photos = destination+"/"+nom_image
+
+            image_path = chemin_de_photos
+            photo_emp.delete(0,tk.END)
+            photo_emp.insert(0,image_path)
+            image_pil = Image.open(image_path)
+            image_ctk = ctk.CTkImage(image_pil, size=(150, 150))
+            label_photo = ctk.CTkLabel(master=frame_c,text='', image=image_ctk)
+            label_photo.place(x=10, y=20)
+            app.destroy()
         except:
+            nom_image = "photo_de_profile.jpeg"
+            destination = "C://wamp64/www/DEV/image/photo_employe"
+            deplacer_fichier(chemin_de_photos, destination)
+            chemin_de_photos = destination+"/"+nom_image
+
+            image_path = chemin_de_photos
+            photo_emp.delete(0,tk.END)
+            photo_emp.insert(0,image_path)
+            image_pil = Image.open(image_path)
+            image_ctk = ctk.CTkImage(image_pil, size=(150, 150))
+            label_photo = ctk.CTkLabel(master=frame_c,text='', image=image_ctk)
+            label_photo.place(x=10, y=20)
             app.destroy()
             
 
@@ -191,6 +225,17 @@ def enregistrement(frame):
             resultat = gp.inserer_employe(information=tuples_attributs)
 
             if resultat:
+                #Nettoyage des chams
+                nom.delete(0,tk.END)
+                prenom.delete(0,tk.END)
+                nationalite.delete(0,tk.END)
+                residence.delete(0,tk.END)
+                salaire.delete(0,tk.END)
+                email.delete(0,tk.END)
+                telephone.delete(0,tk.END)
+                date_emb.delete(0,tk.END)
+                date_nais.delete(0,tk.END)
+                niveau.delete(0,tk.END)
                 messagebox.showwarning("Résultat de la soumission","Enregistrement effectué avec succès")
 
             else:
