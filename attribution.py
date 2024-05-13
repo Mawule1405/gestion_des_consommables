@@ -75,7 +75,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry):
         apercu_fen.title("Liste des consommables à fournir à l'employé")
         apercu_fen.resizable(width=False, height=False)
         apercu_fen.attributes('-topmost', True)
-        
+        apercu_fen.iconbitmap("images/images_app/logo.ico")
         image = Image.open("images/image_consommable/pngwing.com (1).png")
         imagectk = ctk.CTkImage(image, size = (600,650))
         label_fond = ctk.CTkLabel(apercu_fen, text='', image=imagectk)

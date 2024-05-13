@@ -2,18 +2,19 @@ from datetime import datetime
 import customtkinter as ctk
 from fpdf import FPDF
 from tkinter import messagebox
-
+import graphi_print_2 as gp2
+import graphi_print as gp
 
 
 class PDF(FPDF):
     def header(self):
         # Logo
-        self.image('images/images_app/bg_page_connexion.png', 20, 8, 20)
+        self.image('images/images_app/logo.png', 20, 8, 20)
         # Police Arial gras 15
         self.set_font('Arial', 'B', 25)
         # Décalage à droite
         self.cell(80)
-        self.set_text_color(0,0,255)
+        self.set_text_color(0,0,0)
         self.cell(30, 10, 'GRAPHIPRINT', 0, 0, 'C')
         # Retour à la ligne
         self.ln(5)
@@ -31,7 +32,7 @@ class PDF(FPDF):
         # Ligne de séparation
         self.set_line_width(2)
         self.line(10, 35, 200, 35)
-        self.ln(10)
+        self.ln(15)
 
     def employee_info(self, employee_data):
         # Rectangle pour les informations de l'employé
@@ -65,36 +66,42 @@ class PDF(FPDF):
         self.cell(40)
         self.cell(50,20,"Salaire: "+employee_data['Salaire']+"FCFA",0,0,"L")
         self.cell(0,20,"Email: "+employee_data['Email'],0,0,"L")
+
+        self.ln(7)
+        self.cell(40)
+        self.cell(50,20,"Téléphone: "+employee_data['téléphone']+"FCFA",0,0,"L")
+        self.cell(0,20,"Niveau: "+employee_data['Niveau'],0,0,"L")
         # Définir la police et la taille du texte
         self.ln(15)
-        self.set_text_color(255,0,0)
         self.set_font('Arial', 'B', 16)
-        self.cell(0,20,f"Rapport d'activité du {datetime.strftime(datetime.now(), "%d-%m-%Y // %H:%M:%S")}".upper(),0,0,"C")
+        self.cell(0,20,f"Rapport d'activité de l'employé".upper(),0,0,"C")
 
     
     def add_consumables_table(self,titre_table, consumables_data):
     # Titre du tableau
         self.ln(20)
-        self.set_text_color(0,0,255)
+  
         self.set_font('Arial', 'BU', 16)
         self.cell(0, 10, titre_table, 0, 1, 'C')
         self.ln(5)
 
         self.set_text_color(0,0,0)
         # Définir les en-têtes de colonnes
+        self.cell(10)
         self.set_font('Arial', 'B', 10)
-        self.cell(30, 10, 'Numéro', 1, 0, 'C')
-        self.cell(60, 10, 'Nom du Consommable', 1, 0, 'C')
-        self.cell(40, 10, 'Quantité', 1, 0, 'C')
-        self.cell(60, 10, 'Date', 1, 1, 'C')
+        self.cell(20, 10, 'ID', 1, 0, 'C')
+        self.cell(110, 10, 'Nom du Consommable', 1, 0, 'C')
+        self.cell(20, 10, 'Quantité', 1, 0, 'C')
+        self.cell(20, 10, 'Date', 1, 1, 'C')
 
         # Remplir le tableau avec les données
         self.set_font('Arial', '', 10)
         for consumable in consumables_data:
-            self.cell(30, 10, consumable['numero'], 1, 0, 'C')
-            self.cell(60, 10, consumable['nom'], 1, 0, 'C')
-            self.cell(40, 10, consumable['quantite'], 1, 0, 'C')
-            self.cell(60, 10, consumable['date'], 1, 1, 'C')
+            self.cell(10)
+            self.cell(20, 10, consumable['ID'], 1, 0, 'C')
+            self.cell(110, 10, consumable['nom'], 1, 0, 'C')
+            self.cell(20, 10, consumable['quantite'], 1, 0, 'C')
+            self.cell(20, 10, consumable['date'], 1, 1, 'C')
 
 
     # Page footer
@@ -115,6 +122,7 @@ def export_employe_information(employe):
     pdf.alias_nb_pages()
     pdf.add_page()
     
+    nom_service = gp.get_one_service( employe[12])[0][1]
     
     employee_data = {
         "photo": employe[11],
@@ -126,24 +134,30 @@ def export_employe_information(employe):
         'Nationalité': employe[5],
         'Lieu de résidence':  employe[8],
         'Salaire': str(int( employe[7])),
-        'Service': str( employe[12]),
+        'Service': nom_service,
         "Email": employe[9],
         "téléphone":  employe[10],
         "Niveau":  employe[6]
     }
-    consumables_data = [
-        {"numero": "1", "nom": "Papier A4", "quantite": "100", "date": "2024-05-01"},
-        {"numero": "2", "nom": "Encre Noire", "quantite": "5", "date": "2024-05-02"},
-        {"numero": "3", "nom": "Stylo Bleu", "quantite": "10", "date": "2024-05-03"},
-        {"numero": "4", "nom": "Cartouche d'encre", "quantite": "2", "date": "2024-05-04"},
-        {"numero": "5", "nom": "Cahier", "quantite": "20", "date": "2024-05-05"}
-    ]
+
+    liste_cons_use = gp2.liste_consommables_utilises_par_employe(employe[0])
+
+    consommables_use = [{"ID": str(cons[0]), "nom": cons[1], "quantite": str(cons[2]), "date": datetime.strftime(cons[3], "%d-%m-%Y")}  for cons in liste_cons_use]
+    
+
+    liste_cons_com = gp2.liste_consommables_commande_par_employe(employe[0])
+
+    consommables_com = [{"ID": str(cons[0]), "nom": cons[1], "quantite": str(cons[2]), "date": datetime.strftime(cons[3], "%d-%m-%Y")}  for cons in liste_cons_com]
+    
 
     titre1 = "Liste des consommables utilisés"
     titre2 = "Liste des consommables commandés"
     pdf.employee_info(employee_data)
-    pdf.add_consumables_table(titre1,consumables_data)
-    pdf.add_consumables_table(titre2,consumables_data)
+    if consommables_use :
+        pdf.add_consumables_table(titre1,consommables_use)
+    
+    if consommables_com:
+        pdf.add_consumables_table(titre2,consommables_com)
         
     
     types_de_fichiers=[("Fichiers Pdf","*.pdf")]

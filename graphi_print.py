@@ -17,11 +17,12 @@ def connexion_database(host_x='localhost', user_x='root', password_x='', databas
 
     try:
         bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
-        return bdd.cursor()
+        return True
     except mysql.connector.Error:
-        return None
-    except mysql.connector.errors.ProgrammingError:
-        return None
+        return False
+    
+    except:
+        return False
 
 def get_employes(sql="SELECT * FROM Employe",host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)

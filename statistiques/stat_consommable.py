@@ -19,6 +19,7 @@ def liste_conso_utilise():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable utilisés")
     toplevel.attributes('-topmost', True)
+    toplevel.iconbitmap("images/images_app/logo.ico")
 
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
@@ -41,7 +42,7 @@ def liste_conso_utilise():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=500, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=500, y=10)
     
 
     
@@ -57,7 +58,7 @@ def liste_conso_non_utilise():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable non utilisés")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -79,7 +80,7 @@ def liste_conso_non_utilise():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=500, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=500, y=10)
     
 
     
@@ -95,7 +96,7 @@ def liste_conso_epuise():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable épuisés")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -119,7 +120,7 @@ def liste_conso_epuise():
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=50, y=10)
         ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 15, "bold"), text_color="red").place(x=410, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -134,7 +135,7 @@ def liste_conso_plus_utilise_par_categorie():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable le plus utilisés dans chaque catégorie")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -158,7 +159,7 @@ def liste_conso_plus_utilise_par_categorie():
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
         ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=280, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -173,6 +174,7 @@ def liste_conso_plus_chere_par_categorie():
     toplevel.geometry("600x500")
     toplevel.title("Liste de consommables le plus chère de chaque catégorie")
     toplevel.attributes('-topmost', True)
+    toplevel.iconbitmap("images/images_app/logo.ico")
 
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
@@ -197,7 +199,7 @@ def liste_conso_plus_chere_par_categorie():
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
         ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=280, y=10)
-        ctk.CTkLabel(conso_frame, text= str(conso[3])+' FCFA', font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=410, y=10)
+        ctk.CTkLabel(conso_frame, text= str(conso[3])+' FCFA', font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=410, y=10)
 
     
     toplevel.mainloop()
@@ -212,7 +214,7 @@ def liste_conso_utilise_par_annee():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable le plus utilisés par année")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -237,7 +239,7 @@ def liste_conso_utilise_par_annee():
             ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
             ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
             ctk.CTkLabel(conso_frame, text= annee, font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=450, y=10)
-            ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
+            ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -253,7 +255,7 @@ def liste_conso_utilise_par_mois():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable le  utilisés par mois")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -279,7 +281,7 @@ def liste_conso_utilise_par_mois():
                 ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"), corner_radius=0).place(x=10, y=10)
                 ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=40, y=10)
                 ctk.CTkLabel(conso_frame, text=mois+' '+str(annee), font = ("Montsérrat", 14, "bold"), corner_radius=0).place(x=350, y=10)
-                ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="bleu").place(x=510, y=10)
+                ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"), text_color="blue").place(x=510, y=10)
 
     
     toplevel.mainloop()
@@ -299,7 +301,7 @@ def liste_montant_conso_utilise_par_mois():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable le plus utilisés par mois")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -341,7 +343,7 @@ def liste_conso_commande_par_mois():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable commandés par mois")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -386,7 +388,7 @@ def liste_montant_commande_par_mois():
     toplevel.geometry("600x500")
     toplevel.title("Liste des dépenses effectuées pour des commandes dans un mois d'une année")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -433,7 +435,7 @@ def liste_conso_plus_commande_par_categorie():
     toplevel.geometry("600x500")
     toplevel.title("Liste des consommable le plus commandés dans chaque catégorie")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 
@@ -456,7 +458,7 @@ def liste_conso_plus_commande_par_categorie():
 
         ctk.CTkLabel(conso_frame, text= conso[0], font = ("Montsérrat", 15, "bold"),).place(x=10, y=10)
         ctk.CTkLabel(conso_frame, text= conso[1], font = ("Montsérrat", 12, "bold"),).place(x=40, y=10)
-        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 12, "bold"),text_color="bleu").place(x=400, y=10)
+        ctk.CTkLabel(conso_frame, text= conso[2], font = ("Montsérrat", 12, "bold"),text_color="blue").place(x=400, y=10)
         ctk.CTkLabel(conso_frame, text= conso[3], font = ("Montsérrat", 15, "bold"),text_color="red").place(x=510, y=10)
 
     
@@ -474,7 +476,7 @@ def liste_des_commandes_effectifs():
     toplevel.geometry("600x500")
     toplevel.title("Liste des commandes effectuées")
     toplevel.attributes('-topmost', True)
-
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image = ctk.CTkImage(Image.open("images/image_consommable/pngwing.com (1).png"), size=(600,500))
     ctk.CTkLabel(toplevel, text="", image=fond_image).place(x=0,y=0)
 

@@ -17,10 +17,18 @@ def display_images(images):
         img_label = tk.Label(root, image=photo_image)
         img_label.image = photo_image  # Conserver une référence à l'image pour éviter la suppression par le garbage collector
         img_label.pack()
-root = tk.Tk()
-root.title("PDF Viewer")
 
-open_button = tk.Button(root, text="Open PDF", command=open_pdf)
+import tkinter as tk
+
+def create_window():
+    window = tk.Toplevel(root)
+    window.title("Ma fenêtre")
+    window.iconbitmap("images/images_app/logo.ico")  # Remplacez "chemin_vers_icone.ico" par le chemin de votre icône
+
+root = tk.Tk()
+root.title("Fenêtre Principale")
+
+open_button = tk.Button(root, text="Ouvrir fenêtre", command=create_window)
 open_button.pack()
 
 root.mainloop()

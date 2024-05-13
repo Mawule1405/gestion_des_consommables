@@ -507,9 +507,6 @@ def liste_montant_commande_par_mois(mois, annee, host_x='localhost', user_x='roo
 
 
 
-
-
-
 def liste_des_commandes_effectues( host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
     """
     Fonction pour récupérer la liste des commandes effectués
@@ -518,6 +515,48 @@ def liste_des_commandes_effectues( host_x='localhost', user_x='root', password_x
                 FROM commande com, employe emp, fournisseur four
                 WHERE com.id_emp = emp.id_emp AND com.id_four = four.id_four
                 ORDER BY id_com"""
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur = bdd.cursor()
+    curseur.execute(sql)
+    liste = curseur.fetchall()
+    curseur.close()
+    bdd.close()
+
+    return liste
+
+
+
+
+def liste_consommables_utilises_par_employe(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """
+    Fonction pour récupérer la liste des consommables utilisés un employé
+    """
+    sql = f"""SELECT id_dem, nom_cons, qte_demande, date_demande
+            FROM demander dem, consommable cons
+            WHERE dem.id_emp ={id} AND dem.id_cons = cons.id_cons
+            ORDER BY dem.id_dem
+    
+    """
+    bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
+    curseur = bdd.cursor()
+    curseur.execute(sql)
+    liste = curseur.fetchall()
+    curseur.close()
+    bdd.close()
+
+    return liste
+
+
+def liste_consommables_commande_par_employe(id, host_x='localhost', user_x='root', password_x='', database_name='graphi_print'):
+    """
+    Fonction pour récupérer la liste des consommables utilisés un employé
+    """
+    sql = f"""SELECT id_app, nom_cons, qte_com, date_com
+            FROM appartenir app, consommable cons, commande com
+            WHERE com.id_emp = {id} AND app.id_cons = cons.id_cons AND com.id_com = app.id_com
+            ORDER BY app.id_app
+    
+    """
     bdd = mysql.connector.connect(host=host_x, user=user_x, password=password_x, database=database_name)
     curseur = bdd.cursor()
     curseur.execute(sql)

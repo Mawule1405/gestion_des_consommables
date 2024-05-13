@@ -129,7 +129,7 @@ def apercu_des_consommables_selectionner(frame, employe_entry, fournisseur_entry
         apercu_fen.resizable(width=False, height=False)
         apercu_fen.configure(fg_color= set.col_blanc_4)
         apercu_fen.attributes('-topmost', True)
-
+        apercu_fen.iconbitmap("images/images_app/logo.ico")
         image = Image.open("images/image_consommable/pngwing.com (1).png")
         imagectk = ctk.CTkImage(image, size = (600,650))
         label_fond = ctk.CTkLabel(apercu_fen, text='', image=imagectk)

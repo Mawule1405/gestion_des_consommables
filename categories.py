@@ -43,7 +43,7 @@ def ajouter_categorie(frame, page,frame2):
     toplevel.resizable(width=False, height=False)
     toplevel.configure(fg_color= set.col_blanc_4)
     toplevel.attributes('-topmost', True)
-    
+    toplevel.iconbitmap("images/images_app/logo.ico")
     fond_image_path = "images/image_consommable/pngwing.com (1).png"
     fond_image = Image.open(fond_image_path)
     image = ctk.CTkImage(fond_image, size=(500,200))

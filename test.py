@@ -73,26 +73,28 @@ class PDF(FPDF):
     def add_consumables_table(self,titre_table, consumables_data):
     # Titre du tableau
         self.ln(20)
-        self.set_text_color(0,0,255)
+  
         self.set_font('Arial', 'BU', 16)
         self.cell(0, 10, titre_table, 0, 1, 'C')
         self.ln(5)
 
         self.set_text_color(0,0,0)
         # Définir les en-têtes de colonnes
+        self.cell(10)
         self.set_font('Arial', 'B', 10)
-        self.cell(30, 10, 'Numéro', 1, 0, 'C')
-        self.cell(60, 10, 'Nom du Consommable', 1, 0, 'C')
-        self.cell(40, 10, 'Quantité', 1, 0, 'C')
-        self.cell(60, 10, 'Date', 1, 1, 'C')
+        self.cell(20, 10, 'Numéro', 1, 0, 'C')
+        self.cell(110, 10, 'Nom du Consommable', 1, 0, 'C')
+        self.cell(20, 10, 'Quantité', 1, 0, 'C')
+        self.cell(20, 10, 'Date', 1, 1, 'C')
 
         # Remplir le tableau avec les données
         self.set_font('Arial', '', 10)
         for consumable in consumables_data:
-            self.cell(30, 10, consumable['numero'], 1, 0, 'C')
-            self.cell(60, 10, consumable['nom'], 1, 0, 'C')
-            self.cell(40, 10, consumable['quantite'], 1, 0, 'C')
-            self.cell(60, 10, consumable['date'], 1, 1, 'C')
+            self.cell(10)
+            self.cell(20, 10, consumable['numero'], 1, 0, 'C')
+            self.cell(110, 10, consumable['nom'], 1, 0, 'C')
+            self.cell(20, 10, consumable['quantite'], 1, 0, 'C')
+            self.cell(20, 10, consumable['date'], 1, 1, 'C')
 
         
 

@@ -273,11 +273,13 @@ def ajouter_consonmmable(root):
     toplevel = ctk.CTkToplevel()
     toplevel.geometry("720x300+0+0")
     toplevel.title("Ajout d'un nouveau consommable")
+    toplevel.wm_iconbitmap("images/images_app/logo.ico")
     toplevel.configure(fg_color= set.col_blanc_4)
     toplevel.resizable(width=False, height=False)
     toplevel.configure(fg_color= set.col_blanc_4)
     toplevel.attributes('-topmost', True)
-    
+   
+
     fond_image_path = "images/image_consommable/pngwing.com (1).png"
     fond_image = Image.open(fond_image_path)
     image = ctk.CTkImage(fond_image, size=(800,300))
